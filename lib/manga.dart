@@ -40,7 +40,6 @@ class _mangaMainState extends State<mangaMain>
   ];
   double op = 0.0;
   double top = 0;
-  bool fdone = true;
   bool exp = false;
   late Future<List<mangaBasic>> rel;
   String st = "Followed", initst = "Followed";
