@@ -37,7 +37,6 @@ late String CT;
 
 String sevalue = "";
 late Directory appdir;
-// TextEditingController sect = TextEditingController();
 const languageToFlag = {
   "en": "US",
   "pt-br": "BR",

@@ -180,7 +180,6 @@ class _LoadHomeState extends State<LoadHome>
                                           ),
                                           trailing: InkWell(
                                             onTap: () {
-                                              // print("object");
                                               setState(() {
                                                 a.remove(e);
                                                 globals.prefs.setStringList(
@@ -268,7 +267,6 @@ class _LoadHomeState extends State<LoadHome>
                                 ))
                               : (Icon(CupertinoIcons.compass)),
                           label: "Explore",
-                          // backgroundColor: Colors.transparent,
                         ),
                         BottomNavigationBarItem(
                           icon: (cv == 1)
