@@ -1,21 +1,17 @@
 import 'dart:io';
-
 import 'newapilib.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
-late List<mangaBasic> allm;
-
 late SharedPreferences prefs;
-late List<String> follow;
-List<mangaBasic> reading = [];
-late List<String> dropped;
-late List<String> completed;
+
 bool csafe = true;
 bool csugs = true;
 bool cero = true;
 bool cpor = false;
+
 late List<List<mangaBasic>> mdata;
+
 Map<String, List<String>> als = {
   "reading": [],
   "on_hold": [],
@@ -25,17 +21,11 @@ Map<String, List<String>> als = {
   "completed": []
 };
 
-var ofse = 0;
-var session;
-var refresh;
-bool next = true;
 GlobalKey<ScaffoldState> sk = GlobalKey();
 TextEditingController secnt = TextEditingController();
-int loggedin = 0;
 
 late String CT;
 
-String sevalue = "";
 late Directory appdir;
 const languageToFlag = {
   "en": "US",
@@ -125,7 +115,7 @@ List<String> langs = [
   'da',
   'fi'
 ].map((e) => e.toUpperCase()).toList();
-// int currenttotal = 0;
+
 Map<String, String> gen = {
   '07251805-a27e-4d59-b488-f0bfbec15168': 'Thriller',
   '256c8bd9-4904-4360-bf4f-508a76d67183': 'Sci-Fi',

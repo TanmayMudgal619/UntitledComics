@@ -2,7 +2,6 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'chapter.dart';
 import 'newapilib.dart';
 import 'mangachapter.dart';
 import 'globals.dart' as globals;
