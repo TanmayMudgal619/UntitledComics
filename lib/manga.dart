@@ -130,26 +130,6 @@ class _mangaMainState extends State<mangaMain>
           ),
         ),
         Scaffold(
-          // floatingActionButtonLocation:
-          //     FloatingActionButtonLocation.miniEndFloat,
-          // floatingActionButton: (margin == 1.0)
-          //     ? (FloatingActionButton(
-          //         backgroundColor: Colors.black12,
-          //         mini: true,
-          //         onPressed: () {
-          //           setState(() {
-          //             exp = false;
-          //             cnt.animateTo(0,
-          //                 curve: Curves.linear,
-          //                 duration: Duration(milliseconds: 500));
-          //             margin = 0.9;
-          //           });
-          //         },
-          //         child: Icon(
-          //           CupertinoIcons.chevron_up,
-          //         ),
-          //       ))
-          //     : (null),
           appBar: CupertinoNavigationBar(
             backgroundColor: Colors.transparent,
             brightness: Brightness.dark,
