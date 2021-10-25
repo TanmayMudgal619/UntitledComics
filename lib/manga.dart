@@ -20,7 +20,6 @@ class _mangaMainState extends State<mangaMain>
     with SingleTickerProviderStateMixin {
   var offset = 0;
   int next = 1;
-  int total = 0;
   int foll = -1;
   double margin = 0.9;
 
