@@ -6,21 +6,36 @@ import 'globals.dart' as globals;
 import 'package:path_provider/path_provider.dart' as pathProvider;
 import 'package:path/path.dart' as path;
 
-Future<void> download(String _url, String picname) async {
-  final response = await https.get(Uri.parse(_url));
-  // Get the image name
-  // Get the document directory path
-  final appDir = await pathProvider.getApplicationDocumentsDirectory();
+// Future<void> download(String _url, String picname) async {
+//   final response = await https.get(Uri.parse(_url));
 
-  // This is the saved image path
-  // You can use it to display the saved image later.
-  print(appDir.path);
-  final localPath = path.join(appDir.path, picname);
-  print(localPath);
-  // Downloading
-  final imageFile = File(localPath);
-  await imageFile.writeAsBytes(response.bodyBytes);
-}
+//   final appDir = await pathProvider.getApplicationDocumentsDirectory();
+
+//   print(appDir.path);
+//   final localPath = path.join(appDir.path, picname);
+//   print(localPath);
+
+//   final imageFile = File(localPath);
+//   await imageFile.writeAsBytes(response.bodyBytes);
+// }
+
+// Future<void> downloadl(List url, List picname) async {
+//   final response = await Future.wait(url.map((e) => https.get(Uri.parse(e))));
+
+//   final appDir = await pathProvider.getApplicationDocumentsDirectory();
+
+//   // print(appDir.path);
+//   final List<String> localPath =
+//       picname.map((e) => path.join(appDir.path, e)).toList();
+//   // print(localPath);
+
+//   final List<File> imageFile = localPath.map((e) => File(e)).toList();
+//   for (int i = 0; i < picname.length; i++) {
+//     await imageFile[i].writeAsBytes(response[i].bodyBytes);
+//   }
+//   // print("HAHAHA");
+//   // await Future.wait(response.map((e) => imageFile.writeAsBytes(e.bodyBytes)));
+// }
 
 class mangaBasic {
   String id;

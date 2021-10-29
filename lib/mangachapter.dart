@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'chapter.dart';
 import 'globals.dart' as globals;
+import 'newapilib.dart';
 
 class chapterTile extends StatefulWidget {
   final String id;
@@ -11,8 +12,9 @@ class chapterTile extends StatefulWidget {
   final String lang;
   final String hash;
   final String scg;
+  final String bg;
   chapterTile(this.id, this.chapter, this.volumne, this.title, this.lang,
-      this.hash, this.scg);
+      this.hash, this.scg, this.bg);
   @override
   chapterTileState createState() => chapterTileState();
 }
@@ -30,6 +32,9 @@ String _emoji(String country) {
 }
 
 class chapterTileState extends State<chapterTile> {
+  late Future<getChapterImg> imgdata;
+  int i = -1;
+  int j = -1;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -45,10 +50,12 @@ class chapterTileState extends State<chapterTile> {
         visualDensity: VisualDensity.compact,
         onTap: () {
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => chapter(widget.id, widget.chapter,
-                      widget.volumne, widget.scg, widget.hash)));
+            context,
+            MaterialPageRoute(
+              builder: (context) => chapter(widget.id, widget.chapter,
+                  widget.volumne, widget.scg, widget.hash, widget.bg),
+            ),
+          );
         },
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,13 +84,36 @@ class chapterTileState extends State<chapterTile> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(_emoji(globals.languageToFlag[widget.lang]!)),
-            Padding(
-              padding: const EdgeInsets.only(left: 15),
-              child: Icon(
-                CupertinoIcons.download_circle,
-                size: 20,
-              ),
-            ),
+            // InkWell(
+            //   onTap: () {
+            //     ScaffoldMessenger.of(context)
+            //         .showSnackBar(SnackBar(content: Text("Downloading.....")));
+            //     imgdata = getchapterimage(widget.id);
+            //     imgdata.then((value) {
+            //       downloadl(
+            //         value.images.map(
+            //           (e) {
+            //             j += 1;
+            //             return "${value.baseUrl}/data/${widget.hash}/${value.images[j]}";
+            //           },
+            //         ).toList(),
+            //         value.images.map((e) {
+            //           i += 1;
+            //           return "${widget.id}${widget.volumne}${widget.title}${widget.scg}$i${(!globals.prefs.getBool("datas")!) ? (value.images[i]) : (value.simages[i])}";
+            //         }).toList(),
+            //       );
+            //       ScaffoldMessenger.of(context).showSnackBar(
+            //           SnackBar(content: Text("Download Finish!")));
+            //     });
+            //   },
+            //   child: Padding(
+            //     padding: const EdgeInsets.only(left: 15),
+            //     child: Icon(
+            //       CupertinoIcons.download_circle,
+            //       size: 20,
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

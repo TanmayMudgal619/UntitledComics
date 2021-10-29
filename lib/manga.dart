@@ -137,6 +137,9 @@ class _mangaMainState extends State<mangaMain>
               widget.data.title,
               style: TextStyle(color: Colors.white),
             ),
+            trailing: Icon(
+              CupertinoIcons.ellipsis,
+            ),
           ),
           body: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
@@ -346,7 +349,7 @@ class _mangaMainState extends State<mangaMain>
                                                                                 padding: const EdgeInsets.all(5.0),
                                                                                 child: Icon(
                                                                                   CupertinoIcons.check_mark,
-                                                                                  color: Color(0xff0D81EC),
+                                                                                  color: Colors.white,
                                                                                 ),
                                                                               ),
                                                                               onPressed: () {
@@ -422,9 +425,9 @@ class _mangaMainState extends State<mangaMain>
                                                         : (Icon(
                                                             (foll == 1)
                                                                 ? (CupertinoIcons
-                                                                    .bell)
+                                                                    .heart_solid)
                                                                 : (CupertinoIcons
-                                                                    .bell_slash),
+                                                                    .heart),
                                                           )),
                                                   )),
                                             ),
@@ -528,7 +531,7 @@ class _mangaMainState extends State<mangaMain>
                                                     color: (widget
                                                                 .data.status ==
                                                             "ongoing")
-                                                        ? (Color(0xff0D81EC))
+                                                        ? (Colors.white)
                                                         : ((widget.data
                                                                     .status ==
                                                                 "completed")
@@ -584,10 +587,19 @@ class _mangaMainState extends State<mangaMain>
                         ),
                         child: TabBar(
                           controller: taba,
+                          unselectedLabelColor: Colors.white38,
+                          indicatorColor: Colors.white,
+                          labelColor: Colors.white,
                           tabs: [
-                            Tab(child: Text("Info")),
-                            Tab(child: Text("Chapters")),
-                            Tab(child: Text("Based"))
+                            Tab(
+                              child: Text("Info"),
+                            ),
+                            Tab(
+                              child: Text("Chapters"),
+                            ),
+                            Tab(
+                              child: Text("Based"),
+                            ),
                           ],
                         ),
                       ),
@@ -608,7 +620,7 @@ class _mangaMainState extends State<mangaMain>
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: TabBarView(
-                              physics: NeverScrollableScrollPhysics(),
+                              // physics: NeverScrollableScrollPhysics(),
                               controller: taba,
                               children: [
                                 ListView(
@@ -620,7 +632,7 @@ class _mangaMainState extends State<mangaMain>
                                       leading: Icon(
                                         CupertinoIcons
                                             .rectangle_fill_on_rectangle_angled_fill,
-                                        color: Color(0xff0D81EC),
+                                        color: Colors.white,
                                       ),
                                       title: Padding(
                                         padding:
@@ -682,7 +694,7 @@ class _mangaMainState extends State<mangaMain>
                                       horizontalTitleGap: 0.0,
                                       leading: Icon(
                                         CupertinoIcons.tag,
-                                        color: Color(0xff0D81EC),
+                                        color: Colors.white,
                                       ),
                                       title: Column(
                                         mainAxisAlignment:
@@ -697,7 +709,7 @@ class _mangaMainState extends State<mangaMain>
                                                   ),
                                                   child: (Chip(
                                                     backgroundColor:
-                                                        Colors.black54,
+                                                        Colors.white30,
                                                     visualDensity:
                                                         VisualDensity.compact,
                                                     label: Text(
@@ -717,7 +729,7 @@ class _mangaMainState extends State<mangaMain>
                                                             child: Chip(
                                                               backgroundColor:
                                                                   Colors
-                                                                      .black54,
+                                                                      .white30,
                                                               visualDensity:
                                                                   VisualDensity
                                                                       .compact,
@@ -740,7 +752,7 @@ class _mangaMainState extends State<mangaMain>
                                       horizontalTitleGap: 0.0,
                                       leading: Icon(
                                         CupertinoIcons.tag,
-                                        color: Color(0xff0D81EC),
+                                        color: Colors.white,
                                       ),
                                       title: Padding(
                                         padding:
@@ -758,7 +770,7 @@ class _mangaMainState extends State<mangaMain>
                                                     ),
                                                     child: (Chip(
                                                       backgroundColor:
-                                                          Colors.black54,
+                                                          Colors.white30,
                                                       visualDensity:
                                                           VisualDensity.compact,
                                                       label: Text(
@@ -780,7 +792,7 @@ class _mangaMainState extends State<mangaMain>
                                                               child: Chip(
                                                                 backgroundColor:
                                                                     Colors
-                                                                        .black54,
+                                                                        .white30,
                                                                 visualDensity:
                                                                     VisualDensity
                                                                         .compact,
@@ -847,18 +859,18 @@ class _mangaMainState extends State<mangaMain>
                                                 style: ButtonStyle(
                                                   backgroundColor:
                                                       MaterialStateProperty.all(
-                                                          Color(0xff0D81EC)),
+                                                          Colors.white),
                                                 ),
                                               );
                                             return chapterTile(
-                                              currentchdata[i].id,
-                                              currentchdata[i].chapter,
-                                              currentchdata[i].volume,
-                                              currentchdata[i].title,
-                                              currentchdata[i].lang,
-                                              currentchdata[i].hash,
-                                              currentchdata[i].scg,
-                                            );
+                                                currentchdata[i].id,
+                                                currentchdata[i].chapter,
+                                                currentchdata[i].volume,
+                                                currentchdata[i].title,
+                                                currentchdata[i].lang,
+                                                currentchdata[i].hash,
+                                                currentchdata[i].scg,
+                                                widget.data.cover);
                                           }));
                                       default:
                                         if (snapshot.hasError) {
@@ -910,14 +922,14 @@ class _mangaMainState extends State<mangaMain>
                                                   ),
                                                 );
                                               return chapterTile(
-                                                currentchdata[i].id,
-                                                currentchdata[i].chapter,
-                                                currentchdata[i].volume,
-                                                currentchdata[i].title,
-                                                currentchdata[i].lang,
-                                                currentchdata[i].hash,
-                                                currentchdata[i].scg,
-                                              );
+                                                  currentchdata[i].id,
+                                                  currentchdata[i].chapter,
+                                                  currentchdata[i].volume,
+                                                  currentchdata[i].title,
+                                                  currentchdata[i].lang,
+                                                  currentchdata[i].hash,
+                                                  currentchdata[i].scg,
+                                                  widget.data.cover);
                                             }));
                                           }
                                           return Center(
