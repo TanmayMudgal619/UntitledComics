@@ -36,7 +36,7 @@ class _LoadingState extends State<Loading> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/img/newbg.jpg"),
+            image: AssetImage("assets/img/maxresdefault.jpg"),
             fit: BoxFit.cover,
           ),
         ),

@@ -209,121 +209,104 @@ class _SettingsState extends State<Settings> {
                                     0.32,
                                 child: StatefulBuilder(
                                   builder: (context, setModalSate) {
-                                    return Column(
-                                      children: [
-                                        Text(
-                                          "Content Filter",
-                                          style: TextStyle(color: Colors.grey),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 8.0, bottom: 8.0),
-                                          child: Column(
-                                            children: [
-                                              ListTile(
-                                                dense: true,
-                                                onTap: () => setState(() {
-                                                  globals.csafe =
-                                                      !globals.csafe;
-                                                }),
-                                                title: Text(
-                                                  "Safe",
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 18,
-                                                  ),
-                                                ),
-                                                trailing: Switch(
-                                                  inactiveTrackColor:
-                                                      Colors.white,
-                                                  activeTrackColor:
-                                                      Colors.blue.shade100,
-                                                  activeColor:
-                                                      Colors.blue.shade200,
-                                                  value: globals.csafe,
-                                                  onChanged: (value) {
-                                                    setModalSate(() {
-                                                      globals.csafe = value;
-                                                    });
-                                                  },
-                                                ),
+                                    return Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 8.0, bottom: 8.0),
+                                      child: Column(
+                                        children: [
+                                          ListTile(
+                                            dense: true,
+                                            onTap: () => setState(() {
+                                              globals.csafe = !globals.csafe;
+                                            }),
+                                            title: Text(
+                                              "Safe",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18,
                                               ),
-                                              ListTile(
-                                                dense: true,
-                                                title: Text(
-                                                  "Suggestive",
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 18,
-                                                  ),
-                                                ),
-                                                trailing: Switch(
-                                                  inactiveTrackColor:
-                                                      Colors.white,
-                                                  activeTrackColor:
-                                                      Colors.blue.shade100,
-                                                  activeColor:
-                                                      Colors.blue.shade200,
-                                                  value: globals.csugs,
-                                                  onChanged: (value) {
-                                                    setModalSate(() {
-                                                      globals.csugs = value;
-                                                    });
-                                                  },
-                                                ),
-                                              ),
-                                              ListTile(
-                                                dense: true,
-                                                title: Text(
-                                                  "Erotica",
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 18,
-                                                  ),
-                                                ),
-                                                trailing: Switch(
-                                                  inactiveTrackColor:
-                                                      Colors.white,
-                                                  activeTrackColor:
-                                                      Colors.blue.shade100,
-                                                  activeColor:
-                                                      Colors.blue.shade200,
-                                                  value: globals.cero,
-                                                  onChanged: (value) {
-                                                    setModalSate(() {
-                                                      globals.cero = value;
-                                                    });
-                                                  },
-                                                ),
-                                              ),
-                                              ListTile(
-                                                dense: true,
-                                                title: Text(
-                                                  "Pornographic",
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 18,
-                                                  ),
-                                                ),
-                                                trailing: Switch(
-                                                  inactiveTrackColor:
-                                                      Colors.white,
-                                                  activeTrackColor:
-                                                      Colors.blue.shade100,
-                                                  activeColor:
-                                                      Colors.blue.shade200,
-                                                  value: globals.cpor,
-                                                  onChanged: (value) {
-                                                    setModalSate(() {
-                                                      globals.cpor = value;
-                                                    });
-                                                  },
-                                                ),
-                                              ),
-                                            ],
+                                            ),
+                                            trailing: Switch(
+                                              inactiveTrackColor: Colors.white,
+                                              activeTrackColor:
+                                                  Colors.grey.shade300,
+                                              activeColor: Colors.black12,
+                                              value: globals.csafe,
+                                              onChanged: (value) {
+                                                setModalSate(() {
+                                                  globals.csafe = value;
+                                                });
+                                              },
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                          ListTile(
+                                            dense: true,
+                                            title: Text(
+                                              "Suggestive",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18,
+                                              ),
+                                            ),
+                                            trailing: Switch(
+                                              inactiveTrackColor: Colors.white,
+                                              activeTrackColor:
+                                                  Colors.grey.shade300,
+                                              activeColor: Colors.black12,
+                                              value: globals.csugs,
+                                              onChanged: (value) {
+                                                setModalSate(() {
+                                                  globals.csugs = value;
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                          ListTile(
+                                            dense: true,
+                                            title: Text(
+                                              "Erotica",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18,
+                                              ),
+                                            ),
+                                            trailing: Switch(
+                                              inactiveTrackColor: Colors.white,
+                                              activeTrackColor:
+                                                  Colors.grey.shade300,
+                                              activeColor: Colors.black12,
+                                              value: globals.cero,
+                                              onChanged: (value) {
+                                                setModalSate(() {
+                                                  globals.cero = value;
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                          ListTile(
+                                            dense: true,
+                                            title: Text(
+                                              "Pornographic",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18,
+                                              ),
+                                            ),
+                                            trailing: Switch(
+                                              inactiveTrackColor: Colors.white,
+                                              activeTrackColor:
+                                                  Colors.grey.shade300,
+                                              activeColor: Colors.black12,
+                                              value: globals.cpor,
+                                              onChanged: (value) {
+                                                setModalSate(() {
+                                                  globals.cpor = value;
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     );
                                   },
                                 ),
@@ -363,8 +346,8 @@ class _SettingsState extends State<Settings> {
                 ),
                 trailing: Switch(
                   inactiveTrackColor: Colors.white,
-                  activeTrackColor: Colors.blue.shade100,
-                  activeColor: Colors.blue.shade200,
+                  activeTrackColor: Colors.grey.shade300,
+                  activeColor: Colors.black12,
                   value: globals.prefs.getBool("datas")!,
                   onChanged: (bool value) {
                     setState(() {

@@ -16,6 +16,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   TextEditingController usrnm = TextEditingController();
   TextEditingController pswd = TextEditingController();
+  bool show = false;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -89,7 +90,7 @@ class _LoginState extends State<Login> {
                               padding: const EdgeInsets.only(left: 1.0),
                               child: TextFormField(
                                 controller: pswd,
-                                obscureText: true,
+                                obscureText: !show,
                                 style: TextStyle(color: Colors.white),
                                 cursorColor: Colors.white,
                                 decoration: InputDecoration(
@@ -103,6 +104,20 @@ class _LoginState extends State<Login> {
                                     borderSide: BorderSide(
                                       color: Colors.black26,
                                       width: 3,
+                                    ),
+                                  ),
+                                  suffixIcon: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        show = !show;
+                                      });
+                                    },
+                                    child: Icon(
+                                      (show)
+                                          ? (Icons.remove_red_eye)
+                                          : (Icons.remove_red_eye_outlined),
+                                      color: Colors.white,
+                                      size: 20,
                                     ),
                                   ),
                                   labelText: 'Password',

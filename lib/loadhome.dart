@@ -68,7 +68,7 @@ class _LoadHomeState extends State<LoadHome>
             height: size.height,
             width: size.width,
             child: Image.asset(
-              "assets/img/newbg.jpg",
+              "assets/img/maxresdefault.jpg",
               fit: BoxFit.cover,
             ),
           ),
@@ -118,7 +118,7 @@ class _LoadHomeState extends State<LoadHome>
                     ? Material(
                         child: (TextField(
                           style: TextStyle(color: Colors.white),
-                          cursorColor: Colors.blueGrey,
+                          cursorColor: Colors.white,
                           decoration: new InputDecoration(
                             hintText: ' Search...',
                             hintStyle: TextStyle(color: Colors.white),

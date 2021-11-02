@@ -23,7 +23,7 @@ class _showMangasState extends State<showMangas> {
             height: size.height,
             width: size.width,
             child: Image.asset(
-              "assets/img/newbg.jpg",
+              "assets/img/maxresdefault.jpg",
               fit: BoxFit.cover,
             ),
           ),
