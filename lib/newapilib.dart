@@ -521,11 +521,13 @@ Future<Map<String, dynamic>> getalls(String token, String refresh) async {
   }
 }
 
-Future<String> status(String id, token, refresh) async {
+Future<String> following(String id, token, refresh) async {
   var url = Uri.https("api.mangadex.org", "user/follows/manga/$id");
+  // print(url);
   var response = await https
       .get(url, headers: {HttpHeaders.authorizationHeader: "Bearer $token"});
   if (response.statusCode == 200) {
+    // print(response.body);
     return "OK";
   } else if (response.statusCode == 404) {
     return "Error";
@@ -533,7 +535,7 @@ Future<String> status(String id, token, refresh) async {
     var newt = await refresht(refresh);
     globals.prefs.setString("session", newt["session"]);
     globals.prefs.setString("refresh", newt["refresh"]);
-    return await status(id, newt["session"], newt["refresh"]);
+    return await following(id, newt["session"], newt["refresh"]);
   } else {
     throw Exception("ERROR!");
   }
@@ -557,13 +559,15 @@ Future<String> unfollow(String id, token, refresh) async {
 
 Future<String> upst(String id, status, token, refresh) async {
   var url = Uri.https("api.mangadex.org", "/manga/$id/status");
+  // print(url);
   var response = await https.post(url,
       headers: {
         HttpHeaders.authorizationHeader: "Bearer $token",
         HttpHeaders.contentTypeHeader: "application/json"
       },
-      body: jsonEncode({"status": (status == "followed") ? (null) : (status)}));
+      body: jsonEncode({"status": (status == "none") ? (null) : (status)}));
   if (response.statusCode == 200) {
+    // print("object");
     return "OK";
   } else if (response.statusCode == 401) {
     var newt = await refresht(refresh);

@@ -86,8 +86,8 @@ class CurveMangaB extends StatelessWidget {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => mangaMain(item)));
       },
-      onLongPress: () {
-        showDialog(
+      onDoubleTap: () {
+        showCupertinoModalPopup(
             context: context,
             builder: (context) {
               return Align(

@@ -36,13 +36,14 @@ class _mangaMainState extends State<mangaMain>
     "dropped",
     "re_reading",
     "completed",
-    "Followed"
+    "none"
   ];
   double op = 0.0;
   double top = 0;
   bool exp = false;
   late Future<List<mangaBasic>> rel;
-  String st = "Followed", initst = "Followed";
+  String st = "none", initst = "none";
+  GlobalKey<ScaffoldState> ke = GlobalKey();
   @override
   void dispose() {
     globals.CT = "";
@@ -85,7 +86,7 @@ class _mangaMainState extends State<mangaMain>
         initst = st;
       }
     }
-    status(widget.data.id, globals.prefs.getString("session")!,
+    following(widget.data.id, globals.prefs.getString("session")!,
             globals.prefs.getString("refresh")!)
         .then((value) {
       if (value == "OK") {
@@ -130,6 +131,7 @@ class _mangaMainState extends State<mangaMain>
           ),
         ),
         Scaffold(
+          key: ke,
           appBar: CupertinoNavigationBar(
             backgroundColor: Colors.transparent,
             brightness: Brightness.dark,
@@ -137,8 +139,35 @@ class _mangaMainState extends State<mangaMain>
               widget.data.title,
               style: TextStyle(color: Colors.white),
             ),
-            trailing: Icon(
-              CupertinoIcons.ellipsis,
+            trailing: GestureDetector(
+              onTap: () {
+                if (foll == 0)
+                  follow(widget.data.id, globals.prefs.getString("session")!,
+                          globals.prefs.getString("refresh")!)
+                      .then((value) => setState(() {
+                            foll = 1;
+                          }));
+                if (foll == 1)
+                  unfollow(widget.data.id, globals.prefs.getString("session")!,
+                          globals.prefs.getString("refresh")!)
+                      .then((value) => setState(() {
+                            foll = 0;
+                          }));
+              },
+              child: (foll == -1)
+                  ? (SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                    ))
+                  : (Icon(
+                      (foll == 0)
+                          ? (Icons.notifications_none_rounded)
+                          : (Icons.notifications_active_rounded),
+                      size: 20,
+                    )),
             ),
           ),
           body: BackdropFilter(
@@ -171,7 +200,6 @@ class _mangaMainState extends State<mangaMain>
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10.0)),
                                     child: Stack(
-                                      alignment: Alignment.center,
                                       children: [
                                         CachedNetworkImage(
                                           imageUrl: widget.data.cover,
@@ -187,101 +215,56 @@ class _mangaMainState extends State<mangaMain>
                                           fit: BoxFit.cover,
                                         ),
                                         Positioned(
-                                          top: 0,
-                                          right: 0,
+                                          top: 2,
+                                          right: 2,
                                           child: GestureDetector(
-                                            onLongPress: () {
-                                              unfollow(
-                                                      widget.data.id,
-                                                      globals.prefs.getString(
-                                                          "session")!,
-                                                      globals.prefs.getString(
-                                                          "refresh")!)
-                                                  .then((value) {
-                                                setState(() {
-                                                  // op = 1;
-                                                  // top = -30;
-                                                  foll = 0;
-                                                });
-                                              });
-                                            },
-                                            onTap: () {
-                                              if (foll == 0)
-                                                follow(
-                                                        widget.data.id,
-                                                        globals.prefs.getString(
-                                                            "session")!,
-                                                        globals.prefs.getString(
-                                                            "refresh")!)
-                                                    .then((value) {
-                                                  setState(() {
-                                                    op = 1;
-                                                    top = -30;
-                                                    foll = 1;
-                                                  });
-                                                });
-                                              else {
+                                              onTap: () {
                                                 showCupertinoModalPopup(
                                                     context: context,
-                                                    builder:
-                                                        (BuildContext context) {
-                                                      return Material(
-                                                        child: Align(
-                                                          alignment: Alignment
-                                                              .bottomCenter,
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                        .only(
-                                                                    bottom:
-                                                                        25.0),
-                                                            child: ClipRRect(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          25),
-                                                              child:
-                                                                  BackdropFilter(
-                                                                filter: ImageFilter
-                                                                    .blur(
-                                                                        sigmaX:
-                                                                            10,
-                                                                        sigmaY:
-                                                                            10),
-                                                                child:
-                                                                    Container(
-                                                                  padding:
-                                                                      EdgeInsets
-                                                                          .all(
-                                                                              10.0),
-                                                                  color: Colors
-                                                                      .white12,
-                                                                  width: MediaQuery.of(
-                                                                              context)
-                                                                          .copyWith()
-                                                                          .size
-                                                                          .width *
-                                                                      0.9,
-                                                                  height: MediaQuery.of(
-                                                                              context)
-                                                                          .copyWith()
-                                                                          .size
-                                                                          .height /
-                                                                      3,
+                                                    builder: (context) {
+                                                      return Align(
+                                                        alignment: Alignment
+                                                            .bottomCenter,
+                                                        child: Container(
+                                                          margin:
+                                                              EdgeInsets.only(
+                                                                  // top: 90,
+                                                                  bottom: 20),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(
+                                                              Radius.circular(
+                                                                  15),
+                                                            ),
+                                                            border: Border.all(
+                                                              color: Colors
+                                                                  .white24,
+                                                              width: 3,
+                                                            ),
+                                                          ),
+                                                          child: ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(
+                                                              Radius.circular(
+                                                                  15),
+                                                            ),
+                                                            child:
+                                                                BackdropFilter(
+                                                              filter: ImageFilter
+                                                                  .blur(
+                                                                      sigmaX:
+                                                                          10,
+                                                                      sigmaY:
+                                                                          10),
+                                                              child: Container(
+                                                                height: 280,
+                                                                width: 300,
+                                                                child: Material(
                                                                   child: Column(
                                                                     children: [
-                                                                      Padding(
-                                                                        padding:
-                                                                            const EdgeInsets.all(8.0),
-                                                                        child:
-                                                                            Text(
-                                                                          "Set Reading Status",
-                                                                          style:
-                                                                              TextStyle(color: Colors.grey.shade100),
-                                                                          textScaleFactor:
-                                                                              1.1,
-                                                                        ),
-                                                                      ),
                                                                       Expanded(
                                                                         child:
                                                                             Container(
@@ -302,6 +285,27 @@ class _mangaMainState extends State<mangaMain>
                                                                                                 setModalSate(() {
                                                                                                   st = value.toString();
                                                                                                 });
+                                                                                                setState(() {});
+                                                                                                if (initst != st) {
+                                                                                                  if (initst != "none") {
+                                                                                                    globals.als[initst]!.remove(widget.data.id);
+                                                                                                  }
+                                                                                                  initst = st;
+                                                                                                  upst(
+                                                                                                    widget.data.id,
+                                                                                                    st.toLowerCase(),
+                                                                                                    globals.prefs.getString("session")!,
+                                                                                                    globals.prefs.getString("refresh")!,
+                                                                                                  ).then((value) {
+                                                                                                    if (st.toLowerCase() != "none") {
+                                                                                                      if (globals.als[st.toLowerCase()]!.isEmpty) {
+                                                                                                        globals.als[st.toLowerCase()] = [widget.data.id];
+                                                                                                      } else
+                                                                                                        globals.als[st.toLowerCase()]!.add(widget.data.id);
+                                                                                                    }
+                                                                                                  });
+                                                                                                }
+                                                                                                Navigator.pop(context);
                                                                                               },
                                                                                             ),
                                                                                             title: Text(
@@ -316,71 +320,6 @@ class _mangaMainState extends State<mangaMain>
                                                                           ),
                                                                         ),
                                                                       ),
-                                                                      Padding(
-                                                                        padding: const EdgeInsets.only(
-                                                                            top:
-                                                                                8.0,
-                                                                            bottom:
-                                                                                8.0,
-                                                                            right:
-                                                                                18,
-                                                                            left:
-                                                                                18),
-                                                                        child:
-                                                                            Row(
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.spaceBetween,
-                                                                          children: [
-                                                                            TextButton(
-                                                                              child: Padding(
-                                                                                padding: const EdgeInsets.all(5.0),
-                                                                                child: Icon(
-                                                                                  CupertinoIcons.xmark,
-                                                                                  color: Colors.redAccent,
-                                                                                ),
-                                                                              ),
-                                                                              onPressed: () {
-                                                                                st = initst;
-                                                                                Navigator.pop(context);
-                                                                              },
-                                                                            ),
-                                                                            TextButton(
-                                                                              child: Padding(
-                                                                                padding: const EdgeInsets.all(5.0),
-                                                                                child: Icon(
-                                                                                  CupertinoIcons.check_mark,
-                                                                                  color: Colors.white,
-                                                                                ),
-                                                                              ),
-                                                                              onPressed: () {
-                                                                                if (initst != st) {
-                                                                                  // print(initst);
-                                                                                  if (initst != "Followed") {
-                                                                                    globals.als[initst]!.remove(widget.data.id);
-                                                                                  }
-                                                                                  initst = st;
-                                                                                  upst(
-                                                                                    widget.data.id,
-                                                                                    st.toLowerCase(),
-                                                                                    globals.prefs.getString("session")!,
-                                                                                    globals.prefs.getString("refresh")!,
-                                                                                  ).then((value) {
-                                                                                    if (st.toLowerCase() != "followed") {
-                                                                                      if (globals.als[st.toLowerCase()]!.isEmpty) {
-                                                                                        globals.als[st.toLowerCase()] = [
-                                                                                          widget.data.id
-                                                                                        ];
-                                                                                      } else
-                                                                                        globals.als[st.toLowerCase()]!.add(widget.data.id);
-                                                                                    }
-                                                                                  });
-                                                                                }
-                                                                                Navigator.pop(context);
-                                                                              },
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                      ),
                                                                     ],
                                                                   ),
                                                                 ),
@@ -390,63 +329,56 @@ class _mangaMainState extends State<mangaMain>
                                                         ),
                                                       );
                                                     });
-                                              }
-                                            },
-                                            child: Container(
-                                              margin: EdgeInsets.all(5.0),
-                                              padding: EdgeInsets.only(
-                                                top: 1.5,
-                                                left: 1.5,
-                                              ),
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.all(
-                                                  Radius.circular(10000),
+                                              },
+                                              child: Container(
+                                                padding: EdgeInsets.all(5),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.black54,
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                    Radius.circular(
+                                                      100,
+                                                    ),
+                                                  ),
                                                 ),
-                                                color: Colors.black87,
-                                              ),
-                                              child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(5.0),
-                                                  child: SizedBox(
-                                                    width: 25,
-                                                    height: 25,
-                                                    child: (foll == -1)
-                                                        ? Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(3.0),
-                                                            child:
-                                                                (CircularProgressIndicator(
-                                                              strokeWidth: 2.0,
-                                                              color:
-                                                                  Colors.white,
-                                                            )),
-                                                          )
-                                                        : (Icon(
-                                                            (foll == 1)
-                                                                ? (CupertinoIcons
-                                                                    .heart_solid)
-                                                                : (CupertinoIcons
-                                                                    .heart),
-                                                          )),
-                                                  )),
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          child: AnimatedOpacity(
-                                            opacity: op,
-                                            duration: Duration(seconds: 1),
-                                            onEnd: () {
-                                              setState(() {
-                                                op = 0;
-                                              });
-                                            },
-                                            child: Icon(
-                                              CupertinoIcons.heart_solid,
-                                              size: 50,
-                                            ),
-                                          ),
+                                                child: Icon(
+                                                  ((st == "dropped")
+                                                      ? (Icons
+                                                          .bookmark_remove_rounded)
+                                                      : ((st == "re_reading")
+                                                          ? (Icons
+                                                              .bookmarks_rounded)
+                                                          : ((st == "completed")
+                                                              ? (Icons
+                                                                  .bookmark_added_rounded)
+                                                              : (Icons
+                                                                  .bookmark)))),
+                                                  size: 23,
+                                                  color: ((st == "reading")
+                                                      ? (Colors.blueAccent)
+                                                      : ((st == "dropped")
+                                                          ? (Colors
+                                                              .deepOrangeAccent)
+                                                          : ((st ==
+                                                                  "plan_to_read")
+                                                              ? (Colors
+                                                                  .lightBlueAccent)
+                                                              : ((st ==
+                                                                      "completed")
+                                                                  ? (Colors
+                                                                      .green)
+                                                                  : ((st ==
+                                                                          "re_reading")
+                                                                      ? (Colors
+                                                                          .green)
+                                                                      : ((st ==
+                                                                              "on_hold")
+                                                                          ? (Colors
+                                                                              .orange)
+                                                                          : (Colors
+                                                                              .white))))))),
+                                                ),
+                                              )),
                                         ),
                                       ],
                                     ),
@@ -531,7 +463,7 @@ class _mangaMainState extends State<mangaMain>
                                                     color: (widget
                                                                 .data.status ==
                                                             "ongoing")
-                                                        ? (Colors.white)
+                                                        ? (Colors.blueAccent)
                                                         : ((widget.data
                                                                     .status ==
                                                                 "completed")
@@ -667,7 +599,7 @@ class _mangaMainState extends State<mangaMain>
                                               }),
                                               child: Text(
                                                 (widget.data.desc == "")
-                                                    ? ("Nothing Provided by the Uploaders!")
+                                                    ? ("none Provided by the Uploaders!")
                                                     : (widget.data.desc
                                                         .replaceAllMapped(
                                                             RegExp(
@@ -989,3 +921,526 @@ class _mangaMainState extends State<mangaMain>
     );
   }
 }
+
+
+
+
+
+
+                       // Positioned(
+                                        //   top: 0,
+                                        //   right: 0,
+                                        //   child: GestureDetector(
+                                        //     onLongPress: () {
+                                        //       unfollow(
+                                        //               widget.data.id,
+                                        //               globals.prefs.getString(
+                                        //                   "session")!,
+                                        //               globals.prefs.getString(
+                                        //                   "refresh")!)
+                                        //           .then((value) {
+                                        //         setState(() {
+                                        //           // op = 1;
+                                        //           // top = -30;
+                                        //           foll = 0;
+                                        //         });
+                                        //       });
+                                        //     },
+                                        //     onTap: () {
+                                        //       if (foll == 0)
+                                        //         follow(
+                                        //                 widget.data.id,
+                                        //                 globals.prefs.getString(
+                                        //                     "session")!,
+                                        //                 globals.prefs.getString(
+                                        //                     "refresh")!)
+                                        //             .then((value) {
+                                        //           setState(() {
+                                        //             op = 1;
+                                        //             top = -30;
+                                        //             foll = 1;
+                                        //           });
+                                        //         });
+                                        //       else {
+                                        //         showCupertinoModalPopup(
+                                        //             context: context,
+                                        //             builder:
+                                        //                 (BuildContext context) {
+                                        //               return Material(
+                                        //                 child: Align(
+                                        //                   alignment: Alignment
+                                        //                       .bottomCenter,
+                                        //                   child: Padding(
+                                        //                     padding:
+                                        //                         const EdgeInsets
+                                        //                                 .only(
+                                        //                             bottom:
+                                        //                                 25.0),
+                                        //                     child: ClipRRect(
+                                        //                       borderRadius:
+                                        //                           BorderRadius
+                                        //                               .circular(
+                                        //                                   25),
+                                        //                       child:
+                                        //                           BackdropFilter(
+                                        //                         filter: ImageFilter
+                                        //                             .blur(
+                                        //                                 sigmaX:
+                                        //                                     10,
+                                        //                                 sigmaY:
+                                        //                                     10),
+                                        //                         child:
+                                        //                             Container(
+                                        //                           padding:
+                                        //                               EdgeInsets
+                                        //                                   .all(
+                                        //                                       10.0),
+                                        //                           color: Colors
+                                        //                               .white12,
+                                        //                           width: MediaQuery.of(
+                                        //                                       context)
+                                        //                                   .copyWith()
+                                        //                                   .size
+                                        //                                   .width *
+                                        //                               0.9,
+                                        //                           height: MediaQuery.of(
+                                        //                                       context)
+                                        //                                   .copyWith()
+                                        //                                   .size
+                                        //                                   .height /
+                                        //                               3,
+                                                                  // child: Column(
+                                                                  //   children: [
+                                                                  //     Padding(
+                                                                  //       padding:
+                                                                  //           const EdgeInsets.all(8.0),
+                                                                  //       child:
+                                                                  //           Text(
+                                                                  //         "Set Reading Status",
+                                                                  //         style:
+                                                                  //             TextStyle(color: Colors.grey.shade100),
+                                                                  //         textScaleFactor:
+                                                                  //             1.1,
+                                                                  //       ),
+                                                                  //     ),
+                                                                  //     Expanded(
+                                                                  //       child:
+                                                                  //           Container(
+                                                                  //         child:
+                                                                  //             StatefulBuilder(
+                                                                  //           builder:
+                                                                  //               (context, setModalSate) {
+                                                                  //             return SingleChildScrollView(
+                                                                  //               child: Column(
+                                                                  //                 children: statuses
+                                                                  //                     .map((e) => ListTile(
+                                                                  //                           visualDensity: VisualDensity.compact,
+                                                                  //                           leading: Radio(
+                                                                  //                             fillColor: MaterialStateProperty.all(Colors.white),
+                                                                  //                             groupValue: st,
+                                                                  //                             value: e,
+                                                                  //                             onChanged: (String? value) {
+                                                                  //                               setModalSate(() {
+                                                                  //                                 st = value.toString();
+                                                                  //                               });
+                                                                  //                             },
+                                                                  //                           ),
+                                                                  //                           title: Text(
+                                                                  //                             e.toUpperCase(),
+                                                                  //                             style: TextStyle(color: Colors.white),
+                                                                  //                           ),
+                                                                  //                         ))
+                                                                  //                     .toList(),
+                                                                  //               ),
+                                                                  //             );
+                                                                  //           },
+                                                                  //         ),
+                                                                  //       ),
+                                                                  //     ),
+                                                                  //     Padding(
+                                                                  //       padding: const EdgeInsets.only(
+                                                                  //           top:
+                                                                  //               8.0,
+                                                                  //           bottom:
+                                                                  //               8.0,
+                                                                  //           right:
+                                                                  //               18,
+                                                                  //           left:
+                                                                  //               18),
+                                                                  //       child:
+                                                                  //           Row(
+                                                                  //         mainAxisAlignment:
+                                                                  //             MainAxisAlignment.spaceBetween,
+                                                                  //         children: [
+                                                                  //           TextButton(
+                                                                  //             child: Padding(
+                                                                  //               padding: const EdgeInsets.all(5.0),
+                                                                  //               child: Icon(
+                                                                  //                 CupertinoIcons.xmark,
+                                                                  //                 color: Colors.redAccent,
+                                                                  //               ),
+                                                                  //             ),
+                                                                  //             onPressed: () {
+                                                                  //               st = initst;
+                                                                  //               Navigator.pop(context);
+                                                                  //             },
+                                                                  //           ),
+                                                                  //           TextButton(
+                                                                  //             child: Padding(
+                                                                  //               padding: const EdgeInsets.all(5.0),
+                                                                  //               child: Icon(
+                                                                  //                 CupertinoIcons.check_mark,
+                                                                  //                 color: Colors.white,
+                                                                  //               ),
+                                                                  //             ),
+                                                                  //             onPressed: () {
+                                                                  //               if (initst != st) {
+                                                                  //                 // print(initst);
+                                                                  //                 if (initst != "Followed") {
+                                                                  //                   globals.als[initst]!.remove(widget.data.id);
+                                                                  //                 }
+                                                                  //                 initst = st;
+                                                                  //                 upst(
+                                                                  //                   widget.data.id,
+                                                                  //                   st.toLowerCase(),
+                                                                  //                   globals.prefs.getString("session")!,
+                                                                  //                   globals.prefs.getString("refresh")!,
+                                                                  //                 ).then((value) {
+                                                                  //                   if (st.toLowerCase() != "followed") {
+                                                                  //                     if (globals.als[st.toLowerCase()]!.isEmpty) {
+                                                                  //                       globals.als[st.toLowerCase()] = [
+                                                                  //                         widget.data.id
+                                                                  //                       ];
+                                                                  //                     } else
+                                                                  //                       globals.als[st.toLowerCase()]!.add(widget.data.id);
+                                                                  //                   }
+                                                                  //                 });
+                                                                  //               }
+                                                                  //               Navigator.pop(context);
+                                                                  //             },
+                                                                  //           ),
+                                                                  //         ],
+                                                                  //       ),
+                                                                  //     ),
+                                                                  //   ],
+                                                                  // ),
+                                        //                         ),
+                                        //                       ),
+                                        //                     ),
+                                        //                   ),
+                                        //                 ),
+                                        //               );
+                                        //             });
+                                        //       }
+                                        //     },
+                                        //     child: Container(
+                                        //       margin: EdgeInsets.all(5.0),
+                                        //       padding: EdgeInsets.only(
+                                        //         top: 1.5,
+                                        //         left: 1.5,
+                                        //       ),
+                                        //       decoration: BoxDecoration(
+                                        //         borderRadius: BorderRadius.all(
+                                        //           Radius.circular(10000),
+                                        //         ),
+                                        //         color: Colors.black87,
+                                        //       ),
+                                        //       child: Padding(
+                                        //           padding:
+                                        //               const EdgeInsets.all(5.0),
+                                        //           child: SizedBox(
+                                        //             width: 25,
+                                        //             height: 25,
+                                        //             child: (foll == -1)
+                                        //                 ? Padding(
+                                        //                     padding:
+                                        //                         const EdgeInsets
+                                        //                             .all(3.0),
+                                        //                     child:
+                                        //                         (CircularProgressIndicator(
+                                        //                       strokeWidth: 2.0,
+                                        //                       color:
+                                        //                           Colors.white,
+                                        //                     )),
+                                        //                   )
+                                        //                 : (Icon(
+                                        //                     (foll == 1)
+                                        //                         ? (CupertinoIcons
+                                        //                             .heart_solid)
+                                        //                         : (CupertinoIcons
+                                        //                             .heart),
+                                        //                   )),
+                                        //           )),
+                                        //     ),
+                                        //   ),
+                                        // ),
+                                        // Positioned(
+                                        //   child: AnimatedOpacity(
+                                        //     opacity: op,
+                                        //     duration: Duration(seconds: 1),
+                                        //     onEnd: () {
+                                        //       setState(() {
+                                        //         op = 0;
+                                        //       });
+                                        //     },
+                                        //     child: Icon(
+                                        //       CupertinoIcons.heart_solid,
+                                        //       size: 50,
+                                        //     ),
+                                        //   ),
+                                        // ),
+                           
+
+
+
+
+
+
+                  //  Positioned(
+                  //                         top: 0,
+                  //                         right: 0,
+                  //                         child: GestureDetector(
+                  //                           onLongPress: () {
+                  //                             unfollow(
+                  //                                     widget.data.id,
+                  //                                     globals.prefs.getString(
+                  //                                         "session")!,
+                  //                                     globals.prefs.getString(
+                  //                                         "refresh")!)
+                  //                                 .then((value) {
+                  //                               setState(() {
+                  //                                 // op = 1;
+                  //                                 // top = -30;
+                  //                                 foll = 0;
+                  //                               });
+                  //                             });
+                  //                           },
+                  //                           onTap: () {
+                  //                             if (foll == 0)
+                  //                               follow(
+                  //                                       widget.data.id,
+                  //                                       globals.prefs.getString(
+                  //                                           "session")!,
+                  //                                       globals.prefs.getString(
+                  //                                           "refresh")!)
+                  //                                   .then((value) {
+                  //                                 setState(() {
+                  //                                   op = 1;
+                  //                                   top = -30;
+                  //                                   foll = 1;
+                  //                                 });
+                  //                               });
+                  //                             else {
+                  //                               showCupertinoModalPopup(
+                  //                                   context: context,
+                  //                                   builder:
+                  //                                       (BuildContext context) {
+                  //                                     return Material(
+                  //                                       child: Align(
+                  //                                         alignment: Alignment
+                  //                                             .bottomCenter,
+                  //                                         child: Padding(
+                  //                                           padding:
+                  //                                               const EdgeInsets
+                  //                                                       .only(
+                  //                                                   bottom:
+                  //                                                       25.0),
+                  //                                           child: ClipRRect(
+                  //                                             borderRadius:
+                  //                                                 BorderRadius
+                  //                                                     .circular(
+                  //                                                         25),
+                  //                                             child:
+                  //                                                 BackdropFilter(
+                  //                                               filter: ImageFilter
+                  //                                                   .blur(
+                  //                                                       sigmaX:
+                  //                                                           10,
+                  //                                                       sigmaY:
+                  //                                                           10),
+                  //                                               child:
+                  //                                                   Container(
+                  //                                                 padding:
+                  //                                                     EdgeInsets
+                  //                                                         .all(
+                  //                                                             10.0),
+                  //                                                 color: Colors
+                  //                                                     .white12,
+                  //                                                 width: MediaQuery.of(
+                  //                                                             context)
+                  //                                                         .copyWith()
+                  //                                                         .size
+                  //                                                         .width *
+                  //                                                     0.9,
+                  //                                                 height: MediaQuery.of(
+                  //                                                             context)
+                  //                                                         .copyWith()
+                  //                                                         .size
+                  //                                                         .height /
+                  //                                                     3,
+                  //                                                 child: Column(
+                  //                                                   children: [
+                  //                                                     Padding(
+                  //                                                       padding:
+                  //                                                           const EdgeInsets.all(8.0),
+                  //                                                       child:
+                  //                                                           Text(
+                  //                                                         "Set Reading Status",
+                  //                                                         style:
+                  //                                                             TextStyle(color: Colors.grey.shade100),
+                  //                                                         textScaleFactor:
+                  //                                                             1.1,
+                  //                                                       ),
+                  //                                                     ),
+                  //                                                     Expanded(
+                  //                                                       child:
+                  //                                                           Container(
+                  //                                                         child:
+                  //                                                             StatefulBuilder(
+                  //                                                           builder:
+                  //                                                               (context, setModalSate) {
+                  //                                                             return SingleChildScrollView(
+                  //                                                               child: Column(
+                  //                                                                 children: statuses
+                  //                                                                     .map((e) => ListTile(
+                  //                                                                           visualDensity: VisualDensity.compact,
+                  //                                                                           leading: Radio(
+                  //                                                                             fillColor: MaterialStateProperty.all(Colors.white),
+                  //                                                                             groupValue: st,
+                  //                                                                             value: e,
+                  //                                                                             onChanged: (String? value) {
+                  //                                                                               setModalSate(() {
+                  //                                                                                 st = value.toString();
+                  //                                                                               });
+                  //                                                                             },
+                  //                                                                           ),
+                  //                                                                           title: Text(
+                  //                                                                             e.toUpperCase(),
+                  //                                                                             style: TextStyle(color: Colors.white),
+                  //                                                                           ),
+                  //                                                                         ))
+                  //                                                                     .toList(),
+                  //                                                               ),
+                  //                                                             );
+                  //                                                           },
+                  //                                                         ),
+                  //                                                       ),
+                  //                                                     ),
+                  //                                                     Padding(
+                  //                                                       padding: const EdgeInsets.only(
+                  //                                                           top:
+                  //                                                               8.0,
+                  //                                                           bottom:
+                  //                                                               8.0,
+                  //                                                           right:
+                  //                                                               18,
+                  //                                                           left:
+                  //                                                               18),
+                  //                                                       child:
+                  //                                                           Row(
+                  //                                                         mainAxisAlignment:
+                  //                                                             MainAxisAlignment.spaceBetween,
+                  //                                                         children: [
+                  //                                                           TextButton(
+                  //                                                             child: Padding(
+                  //                                                               padding: const EdgeInsets.all(5.0),
+                  //                                                               child: Icon(
+                  //                                                                 CupertinoIcons.xmark,
+                  //                                                                 color: Colors.redAccent,
+                  //                                                               ),
+                  //                                                             ),
+                  //                                                             onPressed: () {
+                  //                                                               st = initst;
+                  //                                                               Navigator.pop(context);
+                  //                                                             },
+                  //                                                           ),
+                  //                                                           TextButton(
+                  //                                                             child: Padding(
+                  //                                                               padding: const EdgeInsets.all(5.0),
+                  //                                                               child: Icon(
+                  //                                                                 CupertinoIcons.check_mark,
+                  //                                                                 color: Colors.white,
+                  //                                                               ),
+                  //                                                             ),
+                  //                                                             onPressed: () {
+                  //                                                               if (initst != st) {
+                  //                                                                 // print(initst);
+                  //                                                                 if (initst != "Followed") {
+                  //                                                                   globals.als[initst]!.remove(widget.data.id);
+                  //                                                                 }
+                  //                                                                 initst = st;
+                  //                                                                 upst(
+                  //                                                                   widget.data.id,
+                  //                                                                   st.toLowerCase(),
+                  //                                                                   globals.prefs.getString("session")!,
+                  //                                                                   globals.prefs.getString("refresh")!,
+                  //                                                                 ).then((value) {
+                  //                                                                   if (st.toLowerCase() != "followed") {
+                  //                                                                     if (globals.als[st.toLowerCase()]!.isEmpty) {
+                  //                                                                       globals.als[st.toLowerCase()] = [
+                  //                                                                         widget.data.id
+                  //                                                                       ];
+                  //                                                                     } else
+                  //                                                                       globals.als[st.toLowerCase()]!.add(widget.data.id);
+                  //                                                                   }
+                  //                                                                 });
+                  //                                                               }
+                  //                                                               Navigator.pop(context);
+                  //                                                             },
+                  //                                                           ),
+                  //                                                         ],
+                  //                                                       ),
+                  //                                                     ),
+                  //                                                   ],
+                  //                                                 ),
+                  //                                               ),
+                  //                                             ),
+                  //                                           ),
+                  //                                         ),
+                  //                                       ),
+                  //                                     );
+                  //                                   });
+                  //                             }
+                  //                           },
+                  //                           child: Container(
+                  //                             margin: EdgeInsets.all(5.0),
+                  //                             padding: EdgeInsets.only(
+                  //                               top: 1.5,
+                  //                               left: 1.5,
+                  //                             ),
+                  //                             decoration: BoxDecoration(
+                  //                               borderRadius: BorderRadius.all(
+                  //                                 Radius.circular(10000),
+                  //                               ),
+                  //                               color: Colors.black87,
+                  //                             ),
+                  //                             child: Padding(
+                  //                                 padding:
+                  //                                     const EdgeInsets.all(5.0),
+                  //                                 child: SizedBox(
+                  //                                   width: 25,
+                  //                                   height: 25,
+                  //                                   child: (foll == -1)
+                  //                                       ? Padding(
+                  //                                           padding:
+                  //                                               const EdgeInsets
+                  //                                                   .all(3.0),
+                  //                                           child:
+                  //                                               (CircularProgressIndicator(
+                  //                                             strokeWidth: 2.0,
+                  //                                             color:
+                  //                                                 Colors.white,
+                  //                                           )),
+                  //                                         )
+                  //                                       : (Icon(
+                  //                                           (foll == 1)
+                  //                                               ? (CupertinoIcons
+                  //                                                   .heart_solid)
+                  //                                               : (CupertinoIcons
+                  //                                                   .heart),
+                  //                                         )),
+                  //                                 )),
+                  //                           ),
+                  //                         ),
+                  //                       ),
+                   
