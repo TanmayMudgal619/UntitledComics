@@ -72,7 +72,6 @@ class _StatusState extends State<Status> {
             !element.value["scroll"].position.outOfRange &&
             element.value["next"] &&
             !element.value["loading"]) {
-          print(element.value["scroll"].position.pixels);
           setState(() {
             element.value["loading"] = true;
             element.value["off"] += 100;
@@ -128,6 +127,7 @@ class _StatusState extends State<Status> {
       children: [
         TabBar(
           isScrollable: true,
+          indicatorColor: Colors.white,
           tabs: [
             Tab(
               child: Text("Reading"),

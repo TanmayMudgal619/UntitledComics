@@ -213,6 +213,12 @@ Future<List<mangaBasic>> search_manga(var title, var limit, var offset) async {
     "limit": limit.toString(),
     "offset": offset.toString(),
     "includes[]": ["author", "artist", "cover_art"],
+    "contentRating[]": [
+      (globals.csafe) ? ("safe") : (null),
+      (globals.csugs) ? ("suggestive") : (null),
+      (globals.cpor) ? ("pornographic") : (null),
+      (globals.cero) ? ("erotica") : (null),
+    ],
   });
   // print(url);
   var response = await https.get(url);

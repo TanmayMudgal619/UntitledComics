@@ -25,7 +25,7 @@ class _LoginState extends State<Login> {
           child: Container(
               decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/img/newbg.jpg"),
+              image: AssetImage("assets/img/maxresdefault.jpg"),
               fit: BoxFit.cover,
             ),
           )),

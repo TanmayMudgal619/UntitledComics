@@ -288,7 +288,7 @@ class _mangaMainState extends State<mangaMain>
                                                                                                 setState(() {});
                                                                                                 if (initst != st) {
                                                                                                   if (initst != "none") {
-                                                                                                    globals.als[initst]!.remove(widget.data.id);
+                                                                                                    globals.als[initst.toLowerCase()]!.remove(widget.data.id);
                                                                                                   }
                                                                                                   initst = st;
                                                                                                   upst(
@@ -309,7 +309,7 @@ class _mangaMainState extends State<mangaMain>
                                                                                               },
                                                                                             ),
                                                                                             title: Text(
-                                                                                              e.toUpperCase(),
+                                                                                              e.toUpperCase().replaceAll("_", " "),
                                                                                               style: TextStyle(color: Colors.white),
                                                                                             ),
                                                                                           ))
@@ -599,7 +599,7 @@ class _mangaMainState extends State<mangaMain>
                                               }),
                                               child: Text(
                                                 (widget.data.desc == "")
-                                                    ? ("none Provided by the Uploaders!")
+                                                    ? ("Nothing Provided by the Uploaders!")
                                                     : (widget.data.desc
                                                         .replaceAllMapped(
                                                             RegExp(
