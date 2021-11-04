@@ -36,7 +36,10 @@ class _LoginState extends State<Login> {
             appBar: AppBar(
               brightness: Brightness.dark,
               automaticallyImplyLeading: false,
-              title: Text("Login"),
+              title: Text(
+                "Login",
+                style: TextStyle(color: Colors.white),
+              ),
               backgroundColor: Colors.transparent,
             ),
             body: Center(
@@ -171,6 +174,7 @@ class _LoginState extends State<Login> {
                                 },
                                 child: Text(
                                   "LogIn",
+                                  style: TextStyle(color: Colors.black45),
                                 ),
                                 style: ButtonStyle(
                                   backgroundColor:

@@ -208,19 +208,20 @@ Future<List<mangaBasic>> get_mangalist_tag(
 }
 
 Future<List<mangaBasic>> search_manga(var title, var limit, var offset) async {
+  List a = [
+    (globals.csafe) ? ("safe") : (null),
+    (globals.csugs) ? ("suggestive") : (null),
+    (globals.cpor) ? ("pornographic") : (null),
+    (globals.cero) ? ("erotica") : (null),
+  ];
+  a.removeWhere((element) => element == null);
   var url = Uri.http("api.mangadex.org", "/manga", {
     "title": title,
     "limit": limit.toString(),
     "offset": offset.toString(),
     "includes[]": ["author", "artist", "cover_art"],
-    "contentRating[]": [
-      (globals.csafe) ? ("safe") : (null),
-      (globals.csugs) ? ("suggestive") : (null),
-      (globals.cpor) ? ("pornographic") : (null),
-      (globals.cero) ? ("erotica") : (null),
-    ],
+    "contentRating[]": a,
   });
-  // print(url);
   var response = await https.get(url);
   if (response.statusCode == 200) {
     var jsonR = json.decode(response.body);
