@@ -449,7 +449,7 @@ Future<Map<String, Set<mangaBasic>>> expl(int off) async {
     }
     return maind;
   } else {
-    throw Exception("Fuck You!");
+    throw Exception("Error!");
   }
 }
 
