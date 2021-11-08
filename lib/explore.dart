@@ -8,8 +8,8 @@ import 'package:flutter/cupertino.dart';
 import 'globals.dart' as globals;
 
 class Explore extends StatefulWidget {
-  List<List<mangaBasic>> data;
-  Explore(this.data);
+  //Have to Work on Explore Tab
+  Explore();
 
   @override
   _ExploreState createState() => _ExploreState();
@@ -20,7 +20,7 @@ class _ExploreState extends State<Explore> {
 
   @override
   void initState() {
-    exdata = expl(0);
+    exdata = expl(0); //Function to Get random Comics
     super.initState();
   }
 
@@ -41,6 +41,7 @@ class _ExploreState extends State<Explore> {
               return Center(child: Text(snapshot.error.toString()));
             } else {
               return RefreshIndicator(
+                //To Shuffle The Loaded Comics
                 backgroundColor: Colors.white,
                 onRefresh: () {
                   return Future.delayed(Duration(seconds: 1), () {

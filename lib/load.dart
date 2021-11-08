@@ -6,6 +6,7 @@ import 'newapilib.dart';
 import 'package:flutter/cupertino.dart';
 
 class Loading extends StatefulWidget {
+  //To Load New Comics Updates for The home Page
   const Loading({Key? key}) : super(key: key);
 
   @override
@@ -17,14 +18,15 @@ class _LoadingState extends State<Loading> {
   @override
   void initState() {
     super.initState();
-    data =
-        homeload(); //Function to Get New Comics, Updated Comics and Specific List of Comics for Slideshow
+    data = homeload(); //Function to Get New Comics, Updated Comics, etc.
     data.then((value) {
+      //Onces the request is done change the mdata(maindata)
       globals.mdata = value;
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => LoadHome(),
+          builder: (context) =>
+              LoadHome(), //LoadHome is the Main Page of The App
         ),
       );
     });

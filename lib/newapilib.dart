@@ -518,7 +518,6 @@ Future<Map<String, dynamic>> getalls(String token, String refresh) async {
   if (response.statusCode == 200) {
     return jsonDecode(response.body)["statuses"];
   } else if (globals.prefs.getBool("login") == true) {
-    // print(response.body);
     var newt = await refresht(refresh);
     globals.prefs.setString("session", newt["session"]);
     globals.prefs.setString("refresh", newt["refresh"]);

@@ -23,6 +23,7 @@ class _LoadHomeState extends State<LoadHome>
   bool isSearch = false; //If Search in Progress
   late Future<List<mangaBasic>> sedata; //Store the Search Data
   String sevalue = ""; //Store the Searched String
+
   int cv = 2; //Bottom Navigation Bar Index
 
   Future<List<mangaBasic>> getdata(int off) async {
@@ -31,10 +32,12 @@ class _LoadHomeState extends State<LoadHome>
 
   @override
   void initState() {
+    //A function to Get all Manga reading status for logged User
     getalls(globals.prefs.getString("session")!,
             globals.prefs.getString("refresh")!)
         .then((value) {
       value.forEach((key, value) {
+        //Based On status Update The Map of List of Comic Ids Accordingly
         if (globals.comicstatus[value] != null) {
           globals.comicstatus[value]!.add(key);
         } else {
@@ -48,13 +51,17 @@ class _LoadHomeState extends State<LoadHome>
 
   @override
   Widget build(BuildContext context) {
+    //Get The Searched History
     Set<String> a = globals.prefs.getStringList("hist")!.toSet();
+
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
     var size = MediaQuery.of(context).size;
     return Stack(
       children: [
+        //Background Image
         Center(
           child: Container(
             height: size.height,
@@ -66,30 +73,34 @@ class _LoadHomeState extends State<LoadHome>
           ),
         ),
         BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+          filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4), //Blue Effect
           child: DefaultTabController(
             length: 6,
             child: Scaffold(
               key: globals.sk,
-              floatingActionButton: (cv == 0)
-                  ? FloatingActionButton(
-                      backgroundColor: Colors.white60,
-                      mini: true,
-                      child: (Icon(CupertinoIcons.gift_alt_fill)),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => randomManga()));
-                      },
-                    )
-                  : (null),
+              floatingActionButton:
+                  (cv == 0) //Show Random Button only in Explore Page
+                      ? FloatingActionButton(
+                          backgroundColor: Colors.white60,
+                          mini: true,
+                          child: (Icon(CupertinoIcons.gift_alt_fill)),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => randomManga(),
+                              ),
+                            );
+                          },
+                        )
+                      : (null),
               backgroundColor: Colors.black26,
               appBar: CupertinoNavigationBar(
                 brightness: Brightness.dark,
                 border: Border.all(color: Colors.transparent),
                 automaticallyImplyLeading: false,
                 backgroundColor: Colors.transparent,
+                //cv == 1 means Search Tab so Change The AppBar
                 trailing: (cv == 1)
                     ? (Material(
                         child: GestureDetector(
@@ -144,11 +155,12 @@ class _LoadHomeState extends State<LoadHome>
                       ),
               ),
               body: [
-                Explore(globals.mdata),
+                Explore(), // Explore Tab
                 ((sevalue.isEmpty && !isSearch))
                     ? (a.isEmpty)
                         ? (Center(
-                            child: Text("Search Your Favourite Manga!"),
+                            child: Text(
+                                "Search Your Favourite Manga!"), //If Nothing is Searched Yet
                           ))
                         : (Container(
                             color: Colors.white10,
@@ -202,6 +214,7 @@ class _LoadHomeState extends State<LoadHome>
                             )),
                           ))
                     : (FutureBuilder<List<mangaBasic>>(
+                        //If Searched
                         future: sedata,
                         builder: (context, snapshot) {
                           switch (snapshot.connectionState) {
@@ -209,7 +222,9 @@ class _LoadHomeState extends State<LoadHome>
                             case ConnectionState.active:
                             case ConnectionState.waiting:
                               return Align(
-                                child: LinearProgressIndicator(),
+                                child: LinearProgressIndicator(
+                                  backgroundColor: Colors.transparent,
+                                ),
                                 alignment: Alignment.topCenter,
                               );
                             default:
@@ -219,24 +234,22 @@ class _LoadHomeState extends State<LoadHome>
                                 );
                               } else {
                                 return SingleChildScrollView(
-                                  child: GV(snapshot.data!),
+                                  child:
+                                      GV(snapshot.data!), //Show Searched Data
                                 );
                               }
                           }
                         },
                       )),
                 SingleChildScrollView(
+                  //Home Tab
                   child: mangaPage(
                     globals.mdata[0],
                     globals.mdata[1],
                     globals.mdata[2],
                   ),
                 ),
-                (globals.comicstatus.isEmpty)
-                    ? (Center(
-                        child: CircularProgressIndicator(),
-                      ))
-                    : (Status()),
+                Status(),
                 Settings(),
               ].elementAt(cv),
               bottomNavigationBar: ClipRRect(
@@ -327,7 +340,6 @@ class _LoadHomeState extends State<LoadHome>
                   ),
                 ),
               ),
-              // extendBody: true,
             ),
           ),
         ),

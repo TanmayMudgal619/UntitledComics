@@ -9,14 +9,22 @@ import 'login.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  //To save Basic Information such as Username, Data Saving mode, Language Preffered, etc
   globals.prefs = await SharedPreferences.getInstance();
+  //Directory for Downloading Images
   globals.appdir = await pp.getApplicationDocumentsDirectory();
+  //lang is for language(By Default EN), login show that does the user is LogedIn or Not
   final l = globals.prefs.getString("lang") ?? 0;
   if (l == 0) {
     globals.prefs.setString("lang", "EN");
   }
   final chk = globals.prefs.getBool("login") ?? 0;
   if (chk == 0) {
+    //Seting Up basic Things
+    //datas for Data Saving Mode
+    //session to store Token
+    //refresh to store Refresh Token
+    //hist to store Searching History
     globals.prefs.setBool("datas", false);
     globals.prefs.setBool("login", false);
     globals.prefs.setString("session", "");
@@ -34,6 +42,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
+    //Setting the Orientation to Vertical
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -89,7 +98,9 @@ class _MyAppState extends State<MyApp> {
               primaryColor: Colors.white),
           iconTheme: IconThemeData(color: Colors.white)),
       title: "App",
-      home: (globals.prefs.getBool("login")!) ? (Loading()) : (Login()),
+      home: (globals.prefs.getBool("login")!)
+          ? (Loading())
+          : (Login()), //If Loged In then Open the Main App otherwise Login Page
     );
   }
 }
