@@ -241,7 +241,7 @@ Future<mangaBasic> random_manga() async {
   });
   var response = await https.get(url);
   if (response.statusCode == 200) {
-    return mangaBasic.fromJson(json.decode(response.body));
+    return mangaBasic.fromJson(json.decode(response.body)["data"]);
   } else {
     throw Exception("Error code : ${response.statusCode}");
   }

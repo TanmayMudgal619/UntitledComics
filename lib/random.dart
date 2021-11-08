@@ -12,33 +12,35 @@ class randomManga extends StatefulWidget {
 class _randomMangaState extends State<randomManga> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.black,
-      child: FutureBuilder<mangaBasic>(
-        future: random_manga(),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.active:
-            case ConnectionState.none:
-            case ConnectionState.waiting:
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            default:
-              if (snapshot.hasError) {
+    return Material(
+      child: Container(
+        color: Colors.black,
+        child: FutureBuilder<mangaBasic>(
+          future: random_manga(),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.active:
+              case ConnectionState.none:
+              case ConnectionState.waiting:
                 return Center(
-                  child: Text(
-                    snapshot.error.toString(),
-                    style: TextStyle(color: Colors.white12),
-                  ),
+                  child: CircularProgressIndicator(),
                 );
-              } else {
-                return mangaMain(
-                  snapshot.data!,
-                );
-              }
-          }
-        },
+              default:
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Text(
+                      snapshot.error.toString(),
+                      style: TextStyle(color: Colors.white12),
+                    ),
+                  );
+                } else {
+                  return mangaMain(
+                    snapshot.data!,
+                  );
+                }
+            }
+          },
+        ),
       ),
     );
   }

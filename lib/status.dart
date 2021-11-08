@@ -13,7 +13,7 @@ class Status extends StatefulWidget {
 class _StatusState extends State<Status> {
   Map<String, Map<String, dynamic>> alsts = {
     "reading": {
-      "data": globals.als["reading"],
+      "data": globals.comicstatus["reading"],
       "off": 0,
       "loading": false,
       "loaded": <mangaBasic>[],
@@ -21,7 +21,7 @@ class _StatusState extends State<Status> {
       "scroll": null,
     },
     "on_hold": {
-      "data": globals.als["on_hold"],
+      "data": globals.comicstatus["on_hold"],
       "off": 0,
       "loading": false,
       "loaded": <mangaBasic>[],
@@ -29,7 +29,7 @@ class _StatusState extends State<Status> {
       "scroll": null,
     },
     "plan_to_read": {
-      "data": globals.als["plan_to_read"],
+      "data": globals.comicstatus["plan_to_read"],
       "off": 0,
       "loading": false,
       "loaded": <mangaBasic>[],
@@ -37,7 +37,7 @@ class _StatusState extends State<Status> {
       "scroll": null,
     },
     "dropped": {
-      "data": globals.als["dropped"],
+      "data": globals.comicstatus["dropped"],
       "off": 0,
       "loading": false,
       "loaded": <mangaBasic>[],
@@ -45,7 +45,7 @@ class _StatusState extends State<Status> {
       "scroll": null,
     },
     "re_reading": {
-      "data": globals.als["re_reading"],
+      "data": globals.comicstatus["re_reading"],
       "off": 0,
       "loading": false,
       "loaded": <mangaBasic>[],
@@ -53,7 +53,7 @@ class _StatusState extends State<Status> {
       "scroll": null,
     },
     "completed": {
-      "data": globals.als["completed"],
+      "data": globals.comicstatus["completed"],
       "off": 0,
       "loading": false,
       "loaded": <mangaBasic>[],

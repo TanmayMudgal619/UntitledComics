@@ -1,5 +1,7 @@
+import 'dart:math';
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
+import 'package:untitled_comics/random.dart';
 import 'explore.dart';
 import 'mangapage.dart';
 import 'status.dart';
@@ -18,14 +20,10 @@ class LoadHome extends StatefulWidget {
 
 class _LoadHomeState extends State<LoadHome>
     with SingleTickerProviderStateMixin {
-  int btindex = 0;
-  bool isSearch = false;
-  int off = 0;
-  late Future<List<mangaBasic>> sedata;
-  List<mangaBasic> medata = [];
-  String sevalue = "";
-  int cv = 2;
-  TextEditingController seval = TextEditingController();
+  bool isSearch = false; //If Search in Progress
+  late Future<List<mangaBasic>> sedata; //Store the Search Data
+  String sevalue = ""; //Store the Searched String
+  int cv = 2; //Bottom Navigation Bar Index
 
   Future<List<mangaBasic>> getdata(int off) async {
     return search_manga(sevalue, '100', off);
@@ -37,21 +35,15 @@ class _LoadHomeState extends State<LoadHome>
             globals.prefs.getString("refresh")!)
         .then((value) {
       value.forEach((key, value) {
-        if (globals.als[value] != null) {
-          globals.als[value]!.add(key);
+        if (globals.comicstatus[value] != null) {
+          globals.comicstatus[value]!.add(key);
         } else {
-          globals.als[value] = [key];
+          globals.comicstatus[value] = [key];
         }
       });
       setState(() {});
     });
     super.initState();
-  }
-
-  void bindex(int index) {
-    setState(() {
-      btindex = index;
-    });
   }
 
   @override
@@ -79,6 +71,19 @@ class _LoadHomeState extends State<LoadHome>
             length: 6,
             child: Scaffold(
               key: globals.sk,
+              floatingActionButton: (cv == 0)
+                  ? FloatingActionButton(
+                      backgroundColor: Colors.white60,
+                      mini: true,
+                      child: (Icon(CupertinoIcons.gift_alt_fill)),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => randomManga()));
+                      },
+                    )
+                  : (null),
               backgroundColor: Colors.black26,
               appBar: CupertinoNavigationBar(
                 brightness: Brightness.dark,
@@ -227,7 +232,7 @@ class _LoadHomeState extends State<LoadHome>
                     globals.mdata[2],
                   ),
                 ),
-                (globals.als.isEmpty)
+                (globals.comicstatus.isEmpty)
                     ? (Center(
                         child: CircularProgressIndicator(),
                       ))

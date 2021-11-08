@@ -80,7 +80,7 @@ class _mangaMainState extends State<mangaMain>
         });
       }
     });
-    for (var i in globals.als.entries) {
+    for (var i in globals.comicstatus.entries) {
       if (i.value.indexOf(widget.data.id) != -1) {
         st = i.key;
         initst = st;
@@ -288,7 +288,7 @@ class _mangaMainState extends State<mangaMain>
                                                                                                 setState(() {});
                                                                                                 if (initst != st) {
                                                                                                   if (initst != "none") {
-                                                                                                    globals.als[initst.toLowerCase()]!.remove(widget.data.id);
+                                                                                                    globals.comicstatus[initst.toLowerCase()]!.remove(widget.data.id);
                                                                                                   }
                                                                                                   initst = st;
                                                                                                   upst(
@@ -298,10 +298,10 @@ class _mangaMainState extends State<mangaMain>
                                                                                                     globals.prefs.getString("refresh")!,
                                                                                                   ).then((value) {
                                                                                                     if (st.toLowerCase() != "none") {
-                                                                                                      if (globals.als[st.toLowerCase()]!.isEmpty) {
-                                                                                                        globals.als[st.toLowerCase()] = [widget.data.id];
+                                                                                                      if (globals.comicstatus[st.toLowerCase()]!.isEmpty) {
+                                                                                                        globals.comicstatus[st.toLowerCase()] = [widget.data.id];
                                                                                                       } else
-                                                                                                        globals.als[st.toLowerCase()]!.add(widget.data.id);
+                                                                                                        globals.comicstatus[st.toLowerCase()]!.add(widget.data.id);
                                                                                                     }
                                                                                                   });
                                                                                                 }

@@ -14,9 +14,12 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  TextEditingController usrnm = TextEditingController();
-  TextEditingController pswd = TextEditingController();
-  bool show = false;
+  TextEditingController usrnm =
+      TextEditingController(); //Text Controller for Username
+  TextEditingController pswd =
+      TextEditingController(); //Text Controller for Password
+  bool show = false; //Show Password
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -25,13 +28,15 @@ class _LoginState extends State<Login> {
           child: Container(
               decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/img/maxresdefault.jpg"),
+              image:
+                  AssetImage("assets/img/maxresdefault.jpg"), //Background Image
               fit: BoxFit.cover,
             ),
           )),
         ),
         BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+          filter:
+              ImageFilter.blur(sigmaX: 4, sigmaY: 4), //To Create Blur Effect
           child: Scaffold(
             appBar: AppBar(
               brightness: Brightness.dark,
@@ -61,7 +66,7 @@ class _LoginState extends State<Login> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Image.asset(
-                              "assets/img/logo.png",
+                              "assets/img/logo.png", //App Logo
                               width: 50,
                             ),
                             Padding(
@@ -133,10 +138,13 @@ class _LoginState extends State<Login> {
                               child: TextButton(
                                 onPressed: () async {
                                   if (usrnm.text.isNotEmpty &&
-                                      pswd.text.isNotEmpty) {
+                                      pswd.text
+                                          .isNotEmpty) //Checking if Username or Password is Empty
+                                  {
                                     var a;
                                     try {
-                                      a = await login(usrnm.text, pswd.text);
+                                      a = await login(
+                                          usrnm.text, pswd.text); //Log In
                                     } catch (e) {
                                       if (e.toString() ==
                                           "Exception: Error code : 400") {
@@ -157,17 +165,19 @@ class _LoginState extends State<Login> {
                                       }
                                       return;
                                     }
-                                    globals.prefs
-                                        .setString("session", a["session"]);
-                                    globals.prefs
-                                        .setString("refresh", a["refresh"]);
-                                    globals.prefs
-                                        .setString("username", usrnm.text);
-                                    globals.prefs.setBool("login", true);
+                                    globals.prefs.setString("session",
+                                        a["session"]); //Storing The Token
+                                    globals.prefs.setString("refresh",
+                                        a["refresh"]); //Storing The Refreshing Token
+                                    globals.prefs.setString("username",
+                                        usrnm.text); //Storing The Username
+                                    globals.prefs.setBool("login",
+                                        true); //Changing The State in Loged In
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => Loading(),
+                                        builder: (context) =>
+                                            Loading(), //Called To load the Data For Home Page
                                       ),
                                     );
                                   }

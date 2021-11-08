@@ -17,7 +17,8 @@ class _LoadingState extends State<Loading> {
   @override
   void initState() {
     super.initState();
-    data = homeload();
+    data =
+        homeload(); //Function to Get New Comics, Updated Comics and Specific List of Comics for Slideshow
     data.then((value) {
       globals.mdata = value;
       Navigator.pushReplacement(

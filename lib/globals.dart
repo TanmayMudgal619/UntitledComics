@@ -12,7 +12,7 @@ bool cpor = false;
 
 late List<List<mangaBasic>> mdata;
 
-Map<String, List<String>> als = {
+Map<String, List<String>> comicstatus = {
   "reading": [],
   "on_hold": [],
   "plan_to_read": [],
