@@ -80,42 +80,7 @@ class chapterTileState extends State<chapterTile> {
           overflow: TextOverflow.ellipsis,
           textScaleFactor: 0.85,
         ),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(_emoji(globals.languageToFlag[widget.lang]!)),
-            // InkWell(
-            //   onTap: () {
-            //     ScaffoldMessenger.of(context)
-            //         .showSnackBar(SnackBar(content: Text("Downloading.....")));
-            //     imgdata = getchapterimage(widget.id);
-            //     imgdata.then((value) {
-            //       downloadl(
-            //         value.images.map(
-            //           (e) {
-            //             j += 1;
-            //             return "${value.baseUrl}/data/${widget.hash}/${value.images[j]}";
-            //           },
-            //         ).toList(),
-            //         value.images.map((e) {
-            //           i += 1;
-            //           return "${widget.id}${widget.volumne}${widget.title}${widget.scg}$i${(!globals.prefs.getBool("datas")!) ? (value.images[i]) : (value.simages[i])}";
-            //         }).toList(),
-            //       );
-            //       ScaffoldMessenger.of(context).showSnackBar(
-            //           SnackBar(content: Text("Download Finish!")));
-            //     });
-            //   },
-            //   child: Padding(
-            //     padding: const EdgeInsets.only(left: 15),
-            //     child: Icon(
-            //       CupertinoIcons.download_circle,
-            //       size: 20,
-            //     ),
-            //   ),
-            // ),
-          ],
-        ),
+        trailing: Text(_emoji(globals.languageToFlag[widget.lang]!)),
       ),
     );
   }

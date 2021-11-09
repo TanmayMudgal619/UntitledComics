@@ -64,7 +64,6 @@ class _StatusState extends State<Status> {
   @override
   void initState() {
     alsts.entries.forEach((element) {
-      // print(element.value);
       element.value["scroll"] = ScrollController();
       element.value["scroll"].addListener(() {
         if ((element.value["scroll"].offset >=

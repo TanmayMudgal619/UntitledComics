@@ -18,16 +18,18 @@ class mangaMain extends StatefulWidget {
 
 class _mangaMainState extends State<mangaMain>
     with SingleTickerProviderStateMixin {
-  var offset = 0;
-  int next = 1;
-  int foll = -1;
+  var offset = 0; //Offset for Chapter
+  int next = 1; //Are there ant more Chapters
+  int foll = -1; //Is User Following Manga or Not
   double margin = 0.9;
 
-  late Future<List<mangaChapterData>> chdata;
+  late Future<List<mangaChapterData>> chdata; //Chapters
+
   ScrollController cnt = ScrollController();
   late TabController taba;
-  int current = 0;
-  List<mangaChapterData> currentchdata = [];
+
+  int current = 0; //Current Tab
+  List<mangaChapterData> currentchdata = []; //Loaded Chapters
   bool isload = true;
   List<String> statuses = [
     "reading",
@@ -38,12 +40,14 @@ class _mangaMainState extends State<mangaMain>
     "completed",
     "none"
   ];
-  double op = 0.0;
-  double top = 0;
+
   bool exp = false;
-  late Future<List<mangaBasic>> rel;
+  late Future<List<mangaBasic>> rel; //Based Comics
+
   String st = "none", initst = "none";
-  GlobalKey<ScaffoldState> ke = GlobalKey();
+
+  // GlobalKey<ScaffoldState> ke = GlobalKey();
+
   @override
   void dispose() {
     globals.CT = "";
@@ -131,7 +135,7 @@ class _mangaMainState extends State<mangaMain>
           ),
         ),
         Scaffold(
-          key: ke,
+          // key: ke,
           appBar: CupertinoNavigationBar(
             backgroundColor: Colors.transparent,
             brightness: Brightness.dark,

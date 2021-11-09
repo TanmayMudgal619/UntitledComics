@@ -113,41 +113,6 @@ class _mangaPageState extends State<mangaPage> {
                                             ),
                                           ),
                                         ),
-                                        // Padding(
-                                        //   padding: const EdgeInsets.all(
-                                        //     1.0,
-                                        //   ),
-                                        //   child: Padding(
-                                        //     padding:
-                                        //         const EdgeInsets.only(right: 8.0),
-                                        //     child: Row(
-                                        //       mainAxisAlignment:
-                                        //           MainAxisAlignment.spaceBetween,
-                                        //       children: [
-                                        //         CupertinoButton(
-                                        //           minSize:
-                                        //               kMinInteractiveDimensionCupertino /
-                                        //                   2,
-                                        //           padding: EdgeInsets.only(
-                                        //               left: 10,
-                                        //               right: 10,
-                                        //               top: 6,
-                                        //               bottom: 6),
-                                        //           color: Colors.transparent,
-                                        // onPressed: () {
-                                        //   Navigator.push(
-                                        //       context,
-                                        //       MaterialPageRoute(
-                                        //           builder: (context) =>
-                                        //               mangaMain(e)));
-                                        // },
-                                        //           child:
-                                        //               Icon(CupertinoIcons.book),
-                                        //         ),
-                                        //       ],
-                                        //     ),
-                                        //   ),
-                                        // )
                                       ],
                                     ),
                                   ),

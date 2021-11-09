@@ -43,6 +43,7 @@ class _ExploreState extends State<Explore> {
               return RefreshIndicator(
                 //To Shuffle The Loaded Comics
                 backgroundColor: Colors.white,
+                color: Colors.transparent,
                 onRefresh: () {
                   return Future.delayed(Duration(seconds: 1), () {
                     setState(() {});

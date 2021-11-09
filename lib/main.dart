@@ -12,7 +12,7 @@ void main() async {
   //To save Basic Information such as Username, Data Saving mode, Language Preffered, etc
   globals.prefs = await SharedPreferences.getInstance();
   //Directory for Downloading Images
-  globals.appdir = await pp.getApplicationDocumentsDirectory();
+  // globals.appdir = await pp.getApplicationDocumentsDirectory();
   //lang is for language(By Default EN), login show that does the user is LogedIn or Not
   final l = globals.prefs.getString("lang") ?? 0;
   if (l == 0) {

@@ -5,9 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'newapilib.dart';
-import 'dart:io';
 import 'globals.dart' as globals;
-import 'package:path/path.dart' as path;
 
 class chapter extends StatefulWidget {
   final String id;
@@ -22,26 +20,15 @@ class chapter extends StatefulWidget {
 }
 
 class _chapterState extends State<chapter> {
+  //List of Images in the Chapter
   late Future<getChapterImg> imgdata;
-  String message = "Data";
-  double value = 0.0;
+  //View Vertical or Horiizontal
   bool ver = true;
-  int i = -1;
-  int j = -1;
 
   @override
   void initState() {
     super.initState();
     imgdata = getchapterimage(widget.id);
-    // imgdata.then((value) => downloadl(
-    //     value.images.map((e) {
-    //       j += 1;
-    //       return "${value.baseUrl}/data/${widget.hash}/${value.images[j]}";
-    //     }).toList(),
-    //     value.images.map((e) {
-    //       i += 1;
-    //       return "${widget.id}${widget.vol}${widget.title}${widget.scg}$i${(!globals.prefs.getBool("datas")!) ? (value.images[i]) : (value.simages[i])}";
-    //     }).toList()));
   }
 
   @override
@@ -71,7 +58,6 @@ class _chapterState extends State<chapter> {
           child: Container(
             color: Colors.black38,
             child: Scaffold(
-              // backgroundColor: Colors.black,
               appBar: CupertinoNavigationBar(
                   backgroundColor: Colors.black38,
                   middle: Text(
@@ -124,46 +110,32 @@ class _chapterState extends State<chapter> {
                     future: imgdata,
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        return ListView.builder(
-                            padding: EdgeInsets.zero,
-                            addAutomaticKeepAlives: true,
-                            scrollDirection:
-                                (ver) ? (Axis.vertical) : (Axis.horizontal),
-                            itemCount: snapshot.data!.images.length,
-                            itemBuilder: (context, i) {
-                              var picname =
-                                  "${widget.id}${widget.vol}${widget.title}${widget.scg}$i${(!globals.prefs.getBool("datas")!) ? (snapshot.data!.images[i]) : (snapshot.data!.simages[i])}";
-                              var img =
-                                  File(path.join(globals.appdir.path, picname));
-                              return Container(
-                                width: (ver) ? (width) : (null),
-                                child: (img.existsSync())
-                                    ? (Image.file(img))
-                                    : (
-                                        // : (InkWell(
-                                        //     onTap: () {
-                                        //       print(globals.appdir.path);
-                                        //       download(
-                                        //               (!globals.prefs.getBool("datas")!)
-                                        //                   ? "${snapshot.data!.baseUrl}/data/${widget.hash}/${snapshot.data!.images[i]}"
-                                        //                   : "${snapshot.data!.baseUrl}/data-saver/${widget.hash}/${snapshot.data!.simages[i]}",
-                                        //               picname)
-                                        //           .then((value) => print("object"));
-                                        //     },
-                                        // child:
-                                        CachedNetworkImage(
-                                        imageUrl: (!globals.prefs
-                                                .getBool("datas")!)
-                                            ? "${snapshot.data!.baseUrl}/data/${widget.hash}/${snapshot.data!.images[i]}"
-                                            : "${snapshot.data!.baseUrl}/data-saver/${widget.hash}/${snapshot.data!.simages[i]}",
-                                        placeholder: (context, s) =>
-                                            Image.asset(
-                                          "assets/img/logo.png",
-                                        ),
-                                        // ),
-                                      )),
-                              );
-                            });
+                        return Container(
+                          color: Colors.black45,
+                          child: ListView.builder(
+                              padding: EdgeInsets.zero,
+                              addAutomaticKeepAlives: true,
+                              scrollDirection:
+                                  (ver) ? (Axis.vertical) : (Axis.horizontal),
+                              itemCount: snapshot.data!.images.length,
+                              itemBuilder: (context, i) {
+                                // var picname =
+                                //     "${widget.id}${widget.vol}${widget.title}${widget.scg}$i${(!globals.prefs.getBool("datas")!) ? (snapshot.data!.images[i]) : (snapshot.data!.simages[i])}";
+                                // var img =
+                                //     File(path.join(globals.appdir.path, picname));
+                                return Container(
+                                  width: (ver) ? (width) : (null),
+                                  child: CachedNetworkImage(
+                                    imageUrl: (!globals.prefs.getBool("datas")!)
+                                        ? "${snapshot.data!.baseUrl}/data/${widget.hash}/${snapshot.data!.images[i]}"
+                                        : "${snapshot.data!.baseUrl}/data-saver/${widget.hash}/${snapshot.data!.simages[i]}",
+                                    placeholder: (context, s) => Image.asset(
+                                      "assets/img/logo.png",
+                                    ),
+                                  ),
+                                );
+                              }),
+                        );
                       } else if (snapshot.hasError) {
                         return Center(child: Text("${snapshot.error}"));
                       }

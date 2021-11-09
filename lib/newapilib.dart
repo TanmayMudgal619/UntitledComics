@@ -11,9 +11,7 @@ import 'package:path/path.dart' as path;
 
 //   final appDir = await pathProvider.getApplicationDocumentsDirectory();
 
-//   print(appDir.path);
 //   final localPath = path.join(appDir.path, picname);
-//   print(localPath);
 
 //   final imageFile = File(localPath);
 //   await imageFile.writeAsBytes(response.bodyBytes);
@@ -24,16 +22,13 @@ import 'package:path/path.dart' as path;
 
 //   final appDir = await pathProvider.getApplicationDocumentsDirectory();
 
-//   // print(appDir.path);
 //   final List<String> localPath =
 //       picname.map((e) => path.join(appDir.path, e)).toList();
-//   // print(localPath);
 
 //   final List<File> imageFile = localPath.map((e) => File(e)).toList();
 //   for (int i = 0; i < picname.length; i++) {
 //     await imageFile[i].writeAsBytes(response[i].bodyBytes);
 //   }
-//   // print("HAHAHA");
 //   // await Future.wait(response.map((e) => imageFile.writeAsBytes(e.bodyBytes)));
 // }
 
@@ -340,7 +335,6 @@ Future<List<List<mangaBasic>>> homeload() async {
     "limit": "100",
     "includes[]": ["author", "artist", "cover_art"],
   });
-  // print(s);
   var top = Uri.http("api.mangadex.org", "/manga", {
     "limit": '50',
     "offset": '0',
@@ -529,11 +523,9 @@ Future<Map<String, dynamic>> getalls(String token, String refresh) async {
 
 Future<String> following(String id, token, refresh) async {
   var url = Uri.https("api.mangadex.org", "user/follows/manga/$id");
-  // print(url);
   var response = await https
       .get(url, headers: {HttpHeaders.authorizationHeader: "Bearer $token"});
   if (response.statusCode == 200) {
-    // print(response.body);
     return "OK";
   } else if (response.statusCode == 404) {
     return "Error";
@@ -565,7 +557,6 @@ Future<String> unfollow(String id, token, refresh) async {
 
 Future<String> upst(String id, status, token, refresh) async {
   var url = Uri.https("api.mangadex.org", "/manga/$id/status");
-  // print(url);
   var response = await https.post(url,
       headers: {
         HttpHeaders.authorizationHeader: "Bearer $token",
@@ -573,7 +564,6 @@ Future<String> upst(String id, status, token, refresh) async {
       },
       body: jsonEncode({"status": (status == "none") ? (null) : (status)}));
   if (response.statusCode == 200) {
-    // print("object");
     return "OK";
   } else if (response.statusCode == 401) {
     var newt = await refresht(refresh);

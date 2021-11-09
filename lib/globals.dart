@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'newapilib.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +25,7 @@ TextEditingController secnt = TextEditingController();
 
 late String CT;
 
-late Directory appdir;
+// late Directory appdir;
 const languageToFlag = {
   "en": "US",
   "pt-br": "BR",

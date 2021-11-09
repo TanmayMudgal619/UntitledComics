@@ -357,7 +357,6 @@ class _SettingsState extends State<Settings> {
                 ),
                 onTap: () {
                   setState(() {
-                    // globals.datas = !globals.datas;
                     globals.prefs
                         .setBool("datas", !globals.prefs.getBool("datas")!);
                   });

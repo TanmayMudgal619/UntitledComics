@@ -8,6 +8,7 @@ import 'manga.dart';
 import 'newapilib.dart';
 import 'show.dart';
 
+//A class for The Horizontal Row on Main Page
 class horizontalRow extends StatelessWidget {
   final double width;
   final String title;
@@ -37,9 +38,10 @@ class horizontalRow extends StatelessWidget {
                       text: title,
                       children: [
                         WidgetSpan(
-                            child: Icon(
-                          CupertinoIcons.forward,
-                        ))
+                          child: Icon(
+                            CupertinoIcons.forward,
+                          ),
+                        ),
                       ],
                       style: TextStyle(fontSize: 20)),
                 )
@@ -53,14 +55,16 @@ class horizontalRow extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: items
                 .sublist(0, 10)
-                .map((e) => Container(
-                      child: CurveMangaB(e, width),
-                      margin: EdgeInsets.only(
-                        left: 5,
-                        right: 15,
-                        bottom: 10,
-                      ),
-                    ))
+                .map(
+                  (e) => Container(
+                    child: CurveMangaB(e, width),
+                    margin: EdgeInsets.only(
+                      left: 5,
+                      right: 15,
+                      bottom: 10,
+                    ),
+                  ),
+                )
                 .toList(),
           ),
         ),
@@ -69,6 +73,7 @@ class horizontalRow extends StatelessWidget {
   }
 }
 
+//A Class for  Comic Card
 class CurveMangaB extends StatelessWidget {
   final mangaBasic item;
   final double width;
@@ -84,9 +89,14 @@ class CurveMangaB extends StatelessWidget {
       splashColor: Colors.transparent,
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => mangaMain(item)));
+          context,
+          MaterialPageRoute(
+            builder: (context) => mangaMain(item),
+          ),
+        );
       },
       onDoubleTap: () {
+        //Double Tap to Get Info. about The Comic
         showCupertinoModalPopup(
             context: context,
             builder: (context) {
@@ -96,7 +106,8 @@ class CurveMangaB extends StatelessWidget {
                   width: width,
                   height: height * 0.65,
                   child: Material(
-                      child: show(context, item, height * 0.65, width)),
+                    child: show(context, item, height * 0.65, width),
+                  ),
                 ),
               );
             });
@@ -116,7 +127,6 @@ class CurveMangaB extends StatelessWidget {
               Material(
                 child: Container(
                   height: 160,
-                  // width: 105,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                     image: DecorationImage(

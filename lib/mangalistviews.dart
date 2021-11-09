@@ -4,6 +4,7 @@ import 'manga.dart';
 import 'newapilib.dart';
 import 'package:flutter/cupertino.dart';
 
+//Class For Based Comic Tiles
 class perdatatile extends StatelessWidget {
   mangaBasic perdata;
   double width;
