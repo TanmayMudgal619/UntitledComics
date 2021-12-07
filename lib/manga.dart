@@ -90,21 +90,22 @@ class _mangaMainState extends State<mangaMain>
         initst = st;
       }
     }
-    following(widget.data.id, globals.prefs.getString("session")!,
-            globals.prefs.getString("refresh")!)
-        .then((value) {
-      if (value == "OK") {
-        if (!mounted) return;
-        setState(() {
-          foll = 1;
-        });
-      } else {
-        if (!mounted) return;
-        setState(() {
-          foll = 0;
-        });
-      }
-    });
+    if (!globals.incog)
+      following(widget.data.id, globals.prefs.getString("session")!,
+              globals.prefs.getString("refresh")!)
+          .then((value) {
+        if (value == "OK") {
+          if (!mounted) return;
+          setState(() {
+            foll = 1;
+          });
+        } else {
+          if (!mounted) return;
+          setState(() {
+            foll = 0;
+          });
+        }
+      });
     globals.CT = widget.data.title;
     rel = get_mangalist_tag(
         widget.data.genrei, widget.data.publicationDemographic, '20');
@@ -137,43 +138,48 @@ class _mangaMainState extends State<mangaMain>
         Scaffold(
           // key: ke,
           appBar: CupertinoNavigationBar(
-            backgroundColor: Colors.transparent,
-            brightness: Brightness.dark,
-            middle: Text(
-              widget.data.title,
-              style: TextStyle(color: Colors.white),
-            ),
-            trailing: GestureDetector(
-              onTap: () {
-                if (foll == 0)
-                  follow(widget.data.id, globals.prefs.getString("session")!,
-                          globals.prefs.getString("refresh")!)
-                      .then((value) => setState(() {
-                            foll = 1;
-                          }));
-                if (foll == 1)
-                  unfollow(widget.data.id, globals.prefs.getString("session")!,
-                          globals.prefs.getString("refresh")!)
-                      .then((value) => setState(() {
-                            foll = 0;
-                          }));
-              },
-              child: (foll == -1)
-                  ? (SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(
-                        color: Colors.white,
-                      ),
-                    ))
-                  : (Icon(
-                      (foll == 0)
-                          ? (Icons.notifications_none_rounded)
-                          : (Icons.notifications_active_rounded),
-                      size: 20,
-                    )),
-            ),
-          ),
+              backgroundColor: Colors.transparent,
+              brightness: Brightness.dark,
+              middle: Text(
+                widget.data.title,
+                style: TextStyle(color: Colors.white),
+              ),
+              trailing: (globals.incog)
+                  ? (null)
+                  : (GestureDetector(
+                      onTap: () {
+                        if (foll == 0)
+                          follow(
+                                  widget.data.id,
+                                  globals.prefs.getString("session")!,
+                                  globals.prefs.getString("refresh")!)
+                              .then((value) => setState(() {
+                                    foll = 1;
+                                  }));
+                        if (foll == 1)
+                          unfollow(
+                                  widget.data.id,
+                                  globals.prefs.getString("session")!,
+                                  globals.prefs.getString("refresh")!)
+                              .then((value) => setState(() {
+                                    foll = 0;
+                                  }));
+                      },
+                      child: (foll == -1)
+                          ? (SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                              ),
+                            ))
+                          : (Icon(
+                              (foll == 0)
+                                  ? (Icons.notifications_none_rounded)
+                                  : (Icons.notifications_active_rounded),
+                              size: 20,
+                            )),
+                    ))),
           body: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
             child: NestedScrollView(
@@ -218,172 +224,181 @@ class _mangaMainState extends State<mangaMain>
                                           width: 150,
                                           fit: BoxFit.cover,
                                         ),
-                                        Positioned(
-                                          top: 2,
-                                          right: 2,
-                                          child: GestureDetector(
-                                              onTap: () {
-                                                showCupertinoModalPopup(
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return Align(
-                                                        alignment: Alignment
-                                                            .bottomCenter,
-                                                        child: Container(
-                                                          margin:
-                                                              EdgeInsets.only(
-                                                                  // top: 90,
-                                                                  bottom: 20),
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .all(
-                                                              Radius.circular(
-                                                                  15),
-                                                            ),
-                                                            border: Border.all(
-                                                              color: Colors
-                                                                  .white24,
-                                                              width: 3,
-                                                            ),
-                                                          ),
-                                                          child: ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .all(
-                                                              Radius.circular(
-                                                                  15),
-                                                            ),
-                                                            child:
-                                                                BackdropFilter(
-                                                              filter: ImageFilter
-                                                                  .blur(
-                                                                      sigmaX:
-                                                                          10,
-                                                                      sigmaY:
-                                                                          10),
+                                        (globals.incog)
+                                            ? (Text(""))
+                                            : (Positioned(
+                                                top: 2,
+                                                right: 2,
+                                                child: GestureDetector(
+                                                    onTap: () {
+                                                      showCupertinoModalPopup(
+                                                          context: context,
+                                                          builder: (context) {
+                                                            return Align(
+                                                              alignment: Alignment
+                                                                  .bottomCenter,
                                                               child: Container(
-                                                                height: 280,
-                                                                width: 300,
-                                                                child: Material(
-                                                                  child: Column(
-                                                                    children: [
-                                                                      Expanded(
+                                                                margin: EdgeInsets
+                                                                    .only(
+                                                                        // top: 90,
+                                                                        bottom:
+                                                                            20),
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .all(
+                                                                    Radius
+                                                                        .circular(
+                                                                            15),
+                                                                  ),
+                                                                  border: Border
+                                                                      .all(
+                                                                    color: Colors
+                                                                        .white24,
+                                                                    width: 3,
+                                                                  ),
+                                                                ),
+                                                                child:
+                                                                    ClipRRect(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .all(
+                                                                    Radius
+                                                                        .circular(
+                                                                            15),
+                                                                  ),
+                                                                  child:
+                                                                      BackdropFilter(
+                                                                    filter: ImageFilter.blur(
+                                                                        sigmaX:
+                                                                            10,
+                                                                        sigmaY:
+                                                                            10),
+                                                                    child:
+                                                                        Container(
+                                                                      height:
+                                                                          280,
+                                                                      width:
+                                                                          300,
+                                                                      child:
+                                                                          Material(
                                                                         child:
-                                                                            Container(
-                                                                          child:
-                                                                              StatefulBuilder(
-                                                                            builder:
-                                                                                (context, setModalSate) {
-                                                                              return SingleChildScrollView(
-                                                                                child: Column(
-                                                                                  children: statuses
-                                                                                      .map((e) => ListTile(
-                                                                                            visualDensity: VisualDensity.compact,
-                                                                                            leading: Radio(
-                                                                                              fillColor: MaterialStateProperty.all(Colors.white),
-                                                                                              groupValue: st,
-                                                                                              value: e,
-                                                                                              onChanged: (String? value) {
-                                                                                                setModalSate(() {
-                                                                                                  st = value.toString();
-                                                                                                });
-                                                                                                setState(() {});
-                                                                                                if (initst != st) {
-                                                                                                  if (initst != "none") {
-                                                                                                    globals.comicstatus[initst.toLowerCase()]!.remove(widget.data.id);
-                                                                                                  }
-                                                                                                  initst = st;
-                                                                                                  upst(
-                                                                                                    widget.data.id,
-                                                                                                    st.toLowerCase(),
-                                                                                                    globals.prefs.getString("session")!,
-                                                                                                    globals.prefs.getString("refresh")!,
-                                                                                                  ).then((value) {
-                                                                                                    if (st.toLowerCase() != "none") {
-                                                                                                      if (globals.comicstatus[st.toLowerCase()]!.isEmpty) {
-                                                                                                        globals.comicstatus[st.toLowerCase()] = [widget.data.id];
-                                                                                                      } else
-                                                                                                        globals.comicstatus[st.toLowerCase()]!.add(widget.data.id);
-                                                                                                    }
-                                                                                                  });
-                                                                                                }
-                                                                                                Navigator.pop(context);
-                                                                                              },
-                                                                                            ),
-                                                                                            title: Text(
-                                                                                              e.toUpperCase().replaceAll("_", " "),
-                                                                                              style: TextStyle(color: Colors.white),
-                                                                                            ),
-                                                                                          ))
-                                                                                      .toList(),
+                                                                            Column(
+                                                                          children: [
+                                                                            Expanded(
+                                                                              child: Container(
+                                                                                child: StatefulBuilder(
+                                                                                  builder: (context, setModalSate) {
+                                                                                    return SingleChildScrollView(
+                                                                                      child: Column(
+                                                                                        children: statuses
+                                                                                            .map((e) => ListTile(
+                                                                                                  visualDensity: VisualDensity.compact,
+                                                                                                  leading: Radio(
+                                                                                                    fillColor: MaterialStateProperty.all(Colors.white),
+                                                                                                    groupValue: st,
+                                                                                                    value: e,
+                                                                                                    onChanged: (String? value) {
+                                                                                                      setModalSate(() {
+                                                                                                        st = value.toString();
+                                                                                                      });
+                                                                                                      setState(() {});
+                                                                                                      if (initst != st) {
+                                                                                                        if (initst != "none") {
+                                                                                                          globals.comicstatus[initst.toLowerCase()]!.remove(widget.data.id);
+                                                                                                        }
+                                                                                                        initst = st;
+                                                                                                        upst(
+                                                                                                          widget.data.id,
+                                                                                                          st.toLowerCase(),
+                                                                                                          globals.prefs.getString("session")!,
+                                                                                                          globals.prefs.getString("refresh")!,
+                                                                                                        ).then((value) {
+                                                                                                          if (st.toLowerCase() != "none") {
+                                                                                                            if (globals.comicstatus[st.toLowerCase()]!.isEmpty) {
+                                                                                                              globals.comicstatus[st.toLowerCase()] = [widget.data.id];
+                                                                                                            } else
+                                                                                                              globals.comicstatus[st.toLowerCase()]!.add(widget.data.id);
+                                                                                                          }
+                                                                                                        });
+                                                                                                      }
+                                                                                                      Navigator.pop(context);
+                                                                                                    },
+                                                                                                  ),
+                                                                                                  title: Text(
+                                                                                                    e.toUpperCase().replaceAll("_", " "),
+                                                                                                    style: TextStyle(color: Colors.white),
+                                                                                                  ),
+                                                                                                ))
+                                                                                            .toList(),
+                                                                                      ),
+                                                                                    );
+                                                                                  },
                                                                                 ),
-                                                                              );
-                                                                            },
-                                                                          ),
+                                                                              ),
+                                                                            ),
+                                                                          ],
                                                                         ),
                                                                       ),
-                                                                    ],
+                                                                    ),
                                                                   ),
                                                                 ),
                                                               ),
-                                                            ),
+                                                            );
+                                                          });
+                                                    },
+                                                    child: Container(
+                                                      padding:
+                                                          EdgeInsets.all(5),
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.black54,
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                          Radius.circular(
+                                                            100,
                                                           ),
                                                         ),
-                                                      );
-                                                    });
-                                              },
-                                              child: Container(
-                                                padding: EdgeInsets.all(5),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.black54,
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                    Radius.circular(
-                                                      100,
-                                                    ),
-                                                  ),
-                                                ),
-                                                child: Icon(
-                                                  ((st == "dropped")
-                                                      ? (Icons
-                                                          .bookmark_remove_rounded)
-                                                      : ((st == "re_reading")
-                                                          ? (Icons
-                                                              .bookmarks_rounded)
-                                                          : ((st == "completed")
-                                                              ? (Icons
-                                                                  .bookmark_added_rounded)
-                                                              : (Icons
-                                                                  .bookmark)))),
-                                                  size: 20,
-                                                  color: ((st == "reading")
-                                                      ? (Colors.blueAccent)
-                                                      : ((st == "dropped")
-                                                          ? (Colors
-                                                              .deepOrangeAccent)
-                                                          : ((st ==
-                                                                  "plan_to_read")
-                                                              ? (Colors
-                                                                  .lightBlueAccent)
-                                                              : ((st ==
-                                                                      "completed")
-                                                                  ? (Colors
-                                                                      .green)
-                                                                  : ((st ==
-                                                                          "re_reading")
-                                                                      ? (Colors
-                                                                          .green)
-                                                                      : ((st ==
-                                                                              "on_hold")
-                                                                          ? (Colors
-                                                                              .orange)
-                                                                          : (Colors
-                                                                              .white))))))),
-                                                ),
-                                              )),
-                                        ),
+                                                      ),
+                                                      child: Icon(
+                                                        ((st == "dropped")
+                                                            ? (Icons
+                                                                .bookmark_remove_rounded)
+                                                            : ((st ==
+                                                                    "re_reading")
+                                                                ? (Icons
+                                                                    .bookmarks_rounded)
+                                                                : ((st ==
+                                                                        "completed")
+                                                                    ? (Icons
+                                                                        .bookmark_added_rounded)
+                                                                    : (Icons
+                                                                        .bookmark)))),
+                                                        size: 20,
+                                                        color: ((st == "reading")
+                                                            ? (Colors
+                                                                .blueAccent)
+                                                            : ((st == "dropped")
+                                                                ? (Colors
+                                                                    .deepOrangeAccent)
+                                                                : ((st ==
+                                                                        "plan_to_read")
+                                                                    ? (Colors
+                                                                        .lightBlueAccent)
+                                                                    : ((st ==
+                                                                            "completed")
+                                                                        ? (Colors
+                                                                            .green)
+                                                                        : ((st ==
+                                                                                "re_reading")
+                                                                            ? (Colors
+                                                                                .green)
+                                                                            : ((st == "on_hold")
+                                                                                ? (Colors.orange)
+                                                                                : (Colors.white))))))),
+                                                      ),
+                                                    )),
+                                              ))
                                       ],
                                     ),
                                   ),
@@ -559,147 +574,89 @@ class _mangaMainState extends State<mangaMain>
                               // physics: NeverScrollableScrollPhysics(),
                               controller: taba,
                               children: [
-                                ListView(
-                                  children: [
-                                    ListTile(
-                                      contentPadding: EdgeInsets.zero,
-                                      dense: true,
-                                      horizontalTitleGap: 0.0,
-                                      leading: Icon(
-                                        CupertinoIcons
-                                            .rectangle_fill_on_rectangle_angled_fill,
-                                        color: Colors.white,
-                                      ),
-                                      title: Padding(
-                                        padding:
-                                            const EdgeInsets.only(top: 12.4),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Sypnosis",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                              ),
-                                              textScaleFactor: 1.7,
-                                            ),
-                                            InkWell(
-                                              splashColor: Colors.transparent,
-                                              onTap: () => setState(() {
-                                                exp = !exp;
-                                                if (exp)
-                                                  cnt.animateTo(
-                                                    cnt.position
-                                                        .maxScrollExtent,
-                                                    curve: Curves.linear,
-                                                    duration: Duration(
-                                                        milliseconds: 500),
-                                                  );
-                                                margin = 1.0;
-                                                exp = true;
-                                              }),
-                                              child: Text(
-                                                (widget.data.desc == "")
-                                                    ? ("Nothing Provided by the Uploaders!")
-                                                    : (widget.data.desc
-                                                        .replaceAllMapped(
-                                                            RegExp(
-                                                                r"\[(/)?\w+\]"),
-                                                            (match) => '')
-                                                        .replaceAllMapped(
-                                                            RegExp(
-                                                                r"\[url(.+)]"),
-                                                            (match) => '')),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 3.0),
+                                  child: ListView(
+                                    children: [
+                                      ListTile(
+                                        contentPadding: EdgeInsets.zero,
+                                        dense: true,
+                                        horizontalTitleGap: 0.0,
+                                        leading: Icon(
+                                          CupertinoIcons
+                                              .rectangle_fill_on_rectangle_angled_fill,
+                                          color: Colors.white,
+                                        ),
+                                        title: Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 12.4),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Sypnosis",
                                                 style: TextStyle(
-                                                    color: Colors.white70),
-                                                textScaleFactor: 1.1,
-                                                maxLines: (exp) ? (null) : (10),
-                                                overflow: TextOverflow.fade,
+                                                  color: Colors.white,
+                                                ),
+                                                textScaleFactor: 1.7,
                                               ),
-                                            ),
-                                          ],
+                                              InkWell(
+                                                splashColor: Colors.transparent,
+                                                onTap: () => setState(() {
+                                                  exp = !exp;
+                                                  if (exp)
+                                                    cnt.animateTo(
+                                                      cnt.position
+                                                          .maxScrollExtent,
+                                                      curve: Curves.linear,
+                                                      duration: Duration(
+                                                          milliseconds: 500),
+                                                    );
+                                                  margin = 1.0;
+                                                  exp = true;
+                                                }),
+                                                child: Text(
+                                                  (widget.data.desc == "")
+                                                      ? ("Nothing Provided by the Uploaders!")
+                                                      : (widget.data.desc
+                                                          .replaceAllMapped(
+                                                              RegExp(
+                                                                  r"\[(/)?\w+\]"),
+                                                              (match) => '')
+                                                          .replaceAllMapped(
+                                                              RegExp(
+                                                                  r"\[url(.+)]"),
+                                                              (match) => '')),
+                                                  style: TextStyle(
+                                                      color: Colors.white70),
+                                                  textScaleFactor: 1.1,
+                                                  maxLines:
+                                                      (exp) ? (null) : (10),
+                                                  overflow: TextOverflow.fade,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    ListTile(
-                                      contentPadding: EdgeInsets.zero,
-                                      dense: true,
-                                      horizontalTitleGap: 0.0,
-                                      leading: Icon(
-                                        CupertinoIcons.tag,
-                                        color: Colors.white,
-                                      ),
-                                      title: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          (widget.data.genre.isEmpty)
-                                              ? Padding(
-                                                  padding: EdgeInsets.only(
-                                                    right: 5.0,
-                                                  ),
-                                                  child: (Chip(
-                                                    backgroundColor:
-                                                        Colors.white30,
-                                                    visualDensity:
-                                                        VisualDensity.compact,
-                                                    label: Text(
-                                                      "Read and Find",
-                                                      style: TextStyle(
-                                                          color: Colors.white),
-                                                    ),
-                                                  )),
-                                                )
-                                              : (Wrap(
-                                                  children: widget.data.genre
-                                                      .map((e) => Padding(
-                                                            padding:
-                                                                EdgeInsets.only(
-                                                              right: 5.0,
-                                                            ),
-                                                            child: Chip(
-                                                              backgroundColor:
-                                                                  Colors
-                                                                      .white30,
-                                                              visualDensity:
-                                                                  VisualDensity
-                                                                      .compact,
-                                                              label: Text(
-                                                                e,
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .white),
-                                                              ),
-                                                            ),
-                                                          ))
-                                                      .toList(),
-                                                ))
-                                        ],
-                                      ),
-                                    ),
-                                    ListTile(
-                                      contentPadding: EdgeInsets.zero,
-                                      dense: true,
-                                      horizontalTitleGap: 0.0,
-                                      leading: Icon(
-                                        CupertinoIcons.tag,
-                                        color: Colors.white,
-                                      ),
-                                      title: Padding(
-                                        padding:
-                                            const EdgeInsets.only(top: 5.0),
-                                        child: Column(
+                                      ListTile(
+                                        contentPadding: EdgeInsets.zero,
+                                        dense: true,
+                                        horizontalTitleGap: 0.0,
+                                        leading: Icon(
+                                          CupertinoIcons.tag,
+                                          color: Colors.white,
+                                        ),
+                                        title: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.start,
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            (widget.data.theme.isEmpty)
+                                            (widget.data.genre.isEmpty)
                                                 ? Padding(
                                                     padding: EdgeInsets.only(
                                                       right: 5.0,
@@ -718,7 +675,7 @@ class _mangaMainState extends State<mangaMain>
                                                     )),
                                                   )
                                                 : (Wrap(
-                                                    children: widget.data.theme
+                                                    children: widget.data.genre
                                                         .map((e) => Padding(
                                                               padding:
                                                                   EdgeInsets
@@ -745,8 +702,74 @@ class _mangaMainState extends State<mangaMain>
                                           ],
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                      ListTile(
+                                        contentPadding: EdgeInsets.zero,
+                                        dense: true,
+                                        horizontalTitleGap: 0.0,
+                                        leading: Icon(
+                                          CupertinoIcons.tag,
+                                          color: Colors.white,
+                                        ),
+                                        title: Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 5.0),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              (widget.data.theme.isEmpty)
+                                                  ? Padding(
+                                                      padding: EdgeInsets.only(
+                                                        right: 5.0,
+                                                      ),
+                                                      child: (Chip(
+                                                        backgroundColor:
+                                                            Colors.white30,
+                                                        visualDensity:
+                                                            VisualDensity
+                                                                .compact,
+                                                        label: Text(
+                                                          "Read and Find",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white),
+                                                        ),
+                                                      )),
+                                                    )
+                                                  : (Wrap(
+                                                      children: widget
+                                                          .data.theme
+                                                          .map((e) => Padding(
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .only(
+                                                                  right: 5.0,
+                                                                ),
+                                                                child: Chip(
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .white30,
+                                                                  visualDensity:
+                                                                      VisualDensity
+                                                                          .compact,
+                                                                  label: Text(
+                                                                    e,
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .white),
+                                                                  ),
+                                                                ),
+                                                              ))
+                                                          .toList(),
+                                                    ))
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                                 FutureBuilder<List<mangaChapterData>>(
                                   future: chdata,

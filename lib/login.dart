@@ -135,8 +135,15 @@ class _LoginState extends State<Login> {
                             ),
                             Padding(
                               padding: const EdgeInsets.only(top: 20.0),
-                              child: TextButton(
-                                onPressed: () async {
+                              child: ListTile(
+                                tileColor: Colors.white24,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(15),
+                                  ),
+                                ),
+                                leading: Icon(Icons.login),
+                                onTap: () async {
                                   if (usrnm.text.isNotEmpty &&
                                       pswd.text
                                           .isNotEmpty) //Checking if Username or Password is Empty
@@ -173,6 +180,7 @@ class _LoginState extends State<Login> {
                                         usrnm.text); //Storing The Username
                                     globals.prefs.setBool("login",
                                         true); //Changing The State in Loged In
+                                    globals.incog = false;
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
@@ -182,16 +190,35 @@ class _LoginState extends State<Login> {
                                     );
                                   }
                                 },
-                                child: Text(
+                                title: Text(
                                   "LogIn",
                                   style: TextStyle(color: Colors.black45),
                                 ),
-                                style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all(Colors.white),
-                                ),
                               ),
                             ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 15.0),
+                              child: ListTile(
+                                tileColor: Colors.white24,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(15),
+                                  ),
+                                ),
+                                leading: Icon(Icons.person_off_rounded),
+                                onTap: () {
+                                  globals.incog = true;
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Loading()));
+                                },
+                                title: Text(
+                                  "Incognito",
+                                  style: TextStyle(color: Colors.black45),
+                                ),
+                              ),
+                            )
                           ],
                         ),
                       ),

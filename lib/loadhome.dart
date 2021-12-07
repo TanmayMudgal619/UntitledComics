@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
+import 'package:untitled_comics/login.dart';
 import 'package:untitled_comics/random.dart';
 import 'explore.dart';
 import 'mangapage.dart';
@@ -33,19 +34,20 @@ class _LoadHomeState extends State<LoadHome>
   @override
   void initState() {
     //A function to Get all Manga reading status for logged User
-    getalls(globals.prefs.getString("session")!,
-            globals.prefs.getString("refresh")!)
-        .then((value) {
-      value.forEach((key, value) {
-        //Based On status Update The Map of List of Comic Ids Accordingly
-        if (globals.comicstatus[value] != null) {
-          globals.comicstatus[value]!.add(key);
-        } else {
-          globals.comicstatus[value] = [key];
-        }
+    if (!globals.incog)
+      getalls(globals.prefs.getString("session")!,
+              globals.prefs.getString("refresh")!)
+          .then((value) {
+        value.forEach((key, value) {
+          //Based On status Update The Map of List of Comic Ids Accordingly
+          if (globals.comicstatus[value] != null) {
+            globals.comicstatus[value]!.add(key);
+          } else {
+            globals.comicstatus[value] = [key];
+          }
+        });
+        setState(() {});
       });
-      setState(() {});
-    });
     super.initState();
   }
 
@@ -126,8 +128,160 @@ class _LoadHomeState extends State<LoadHome>
                     ? GestureDetector(
                         child: Icon(
                           Icons.filter_alt_outlined,
+                          size: 19,
                         ),
-                        onTap: () {},
+                        // onTap: () {
+                        //   showCupertinoModalPopup(
+                        //       context: context,
+                        //       builder: (context) {
+                        //         return Material(
+                        //           child: Container(
+                        //             width: size.width,
+                        //             decoration: BoxDecoration(
+                        //               borderRadius: BorderRadius.all(
+                        //                 Radius.circular(15),
+                        //               ),
+                        //             ),
+                        //             child: ClipRRect(
+                        //               borderRadius: BorderRadius.all(
+                        //                 Radius.circular(15),
+                        //               ),
+                        //               child: BackdropFilter(
+                        //                 filter: ImageFilter.blur(
+                        //                   sigmaX: 10,
+                        //                   sigmaY: 10,
+                        //                 ),
+                        //                 child: Padding(
+                        //                   padding: const EdgeInsets.only(
+                        //                     top: kToolbarHeight,
+                        //                     left: 10,
+                        //                     right: 10,
+                        //                     bottom: 10,
+                        //                   ),
+                        //                   child: SingleChildScrollView(
+                        //                     child: Column(
+                        //                       crossAxisAlignment:
+                        //                           CrossAxisAlignment.start,
+                        //                       children: [
+                        //                         Text(
+                        //                           "Demographic",
+                        //                           style:
+                        //                               TextStyle(fontSize: 20),
+                        //                         ),
+                        //                         Wrap(
+                        //                           spacing: 5,
+                        //                           children: globals.dem.map(
+                        //                             (e) {
+                        //                               bool a = false;
+                        //                               return FilterChip(
+                        //                                 onSelected: (value) {
+                        //                                   setState(() {
+                        //                                     a = !a;
+                        //                                   });
+                        //                                 },
+                        //                                 visualDensity:
+                        //                                     VisualDensity
+                        //                                         .compact,
+                        //                                 label: Text(
+                        //                                   e.toUpperCase(),
+                        //                                 ),
+                        //                                 selected: a,
+                        //                               );
+                        //                             },
+                        //                           ).toList(),
+                        //                         ),
+                        //                         Padding(
+                        //                             padding: EdgeInsets.all(5)),
+                        //                         Text(
+                        //                           "Status",
+                        //                           style:
+                        //                               TextStyle(fontSize: 20),
+                        //                         ),
+                        //                         Wrap(
+                        //                           spacing: 5,
+                        //                           children: globals.stat.map(
+                        //                             (e) {
+                        //                               return ChoiceChip(
+                        //                                 label: Text(
+                        //                                     e.toUpperCase()),
+                        //                                 selected: true,
+                        //                               );
+                        //                             },
+                        //                           ).toList(),
+                        //                         ),
+                        //                         Padding(
+                        //                             padding: EdgeInsets.all(5)),
+                        //                         Text(
+                        //                           "Genre",
+                        //                           style:
+                        //                               TextStyle(fontSize: 20),
+                        //                         ),
+                        //                         Wrap(
+                        //                           spacing: 5,
+                        //                           children:
+                        //                               globals.gen.entries.map(
+                        //                             (e) {
+                        //                               return ChoiceChip(
+                        //                                 label: Text(
+                        //                                   e.value.toUpperCase(),
+                        //                                 ),
+                        //                                 selected: true,
+                        //                               );
+                        //                             },
+                        //                           ).toList(),
+                        //                         ),
+                        //                         Padding(
+                        //                             padding: EdgeInsets.all(5)),
+                        //                         Text(
+                        //                           "Theme",
+                        //                           style:
+                        //                               TextStyle(fontSize: 20),
+                        //                         ),
+                        //                         Wrap(
+                        //                           spacing: 5,
+                        //                           children:
+                        //                               globals.the.entries.map(
+                        //                             (e) {
+                        //                               return ChoiceChip(
+                        //                                 label: Text(
+                        //                                   e.key.toUpperCase(),
+                        //                                 ),
+                        //                                 selected: true,
+                        //                               );
+                        //                             },
+                        //                           ).toList(),
+                        //                         ),
+                        //                         Padding(
+                        //                             padding: EdgeInsets.all(5)),
+                        //                         Text(
+                        //                           "Format",
+                        //                           style:
+                        //                               TextStyle(fontSize: 20),
+                        //                         ),
+                        //                         Wrap(
+                        //                           spacing: 5,
+                        //                           children:
+                        //                               globals.form.entries.map(
+                        //                             (e) {
+                        //                               return ChoiceChip(
+                        //                                 label: Text(
+                        //                                   e.key.toUpperCase(),
+                        //                                 ),
+                        //                                 selected: true,
+                        //                               );
+                        //                             },
+                        //                           ).toList(),
+                        //                         ),
+                        //                       ],
+                        //                     ),
+                        //                   ),
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //           ),
+                        //         );
+                        //       });
+                        // },
                       )
                     : (null),
                 middle: (cv == 1)
@@ -160,7 +314,8 @@ class _LoadHomeState extends State<LoadHome>
                     ? (a.isEmpty)
                         ? (Center(
                             child: Text(
-                                "Search Your Favourite Manga!"), //If Nothing is Searched Yet
+                              "Search Your Favourite Manga!",
+                            ), //If Nothing is Searched Yet
                           ))
                         : (Container(
                             color: Colors.white10,
@@ -249,8 +404,40 @@ class _LoadHomeState extends State<LoadHome>
                     globals.mdata[2],
                   ),
                 ),
-                Status(),
-                Settings(),
+                (globals.incog)
+                    ? (BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                        child: Container(
+                          child: (Center(
+                            child: TextButton(
+                              child: Text("Login First!"),
+                              onPressed: () {
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (context) => Login()));
+                              },
+                            ),
+                          )),
+                        ),
+                      ))
+                    : (Status()),
+                (globals.incog)
+                    ? (BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                        child: Container(
+                          child: (Center(
+                            child: TextButton(
+                              child: Text("Login First!"),
+                              onPressed: () {
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (context) => Login()));
+                              },
+                            ),
+                          )),
+                        ),
+                      ))
+                    : (Settings()),
               ].elementAt(cv),
               bottomNavigationBar: ClipRRect(
                 child: BackdropFilter(

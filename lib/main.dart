@@ -25,12 +25,14 @@ void main() async {
     //session to store Token
     //refresh to store Refresh Token
     //hist to store Searching History
+    globals.prefs.setBool("incog", false);
     globals.prefs.setBool("datas", false);
     globals.prefs.setBool("login", false);
     globals.prefs.setString("session", "");
     globals.prefs.setString("refresh", "");
     globals.prefs.setStringList("hist", []);
   }
+  globals.incog = globals.prefs.getBool("incog") ?? (false);
   runApp(MyApp());
 }
 
@@ -97,10 +99,12 @@ class _MyAppState extends State<MyApp> {
               scaffoldBackgroundColor: Colors.black,
               primaryColor: Colors.white),
           iconTheme: IconThemeData(color: Colors.white)),
-      title: "App",
-      home: (globals.prefs.getBool("login")!)
+      title: "Untitled Comics",
+      home: (globals.prefs.getBool("incog")! == true)
           ? (Loading())
-          : (Login()), //If Loged In then Open the Main App otherwise Login Page
+          : ((globals.prefs.getBool("login")!)
+              ? (Loading())
+              : (Login())), //If Loged In then Open the Main App otherwise Login Page
     );
   }
 }

@@ -2,6 +2,8 @@ import 'newapilib.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
+bool incog = false;
+
 late SharedPreferences prefs;
 
 bool csafe = true;
@@ -197,3 +199,18 @@ Map<String, String> form = {
   'Adaptation': 'f4122d1c-3b44-44d0-9936-ff7502c39ad3',
   'Full Color': 'f5ba408b-0e7a-484d-8d49-4e9125ac96de'
 };
+
+List dem = [
+  "shounen",
+  "shoujo",
+  "josei",
+  "seinen",
+  "none",
+];
+
+List stat = [
+  "ongoing",
+  "completed",
+  "hiatus",
+  "cancelled",
+];
