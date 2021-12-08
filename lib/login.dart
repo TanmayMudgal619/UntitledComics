@@ -159,7 +159,8 @@ class _LoginState extends State<Login> {
                                             .showSnackBar(
                                           SnackBar(
                                             content: Text(
-                                                "Invalid Username/Password!"),
+                                              "Invalid Username/Password!",
+                                            ),
                                           ),
                                         );
                                       } else {
@@ -208,6 +209,7 @@ class _LoginState extends State<Login> {
                                 leading: Icon(Icons.person_off_rounded),
                                 onTap: () {
                                   globals.incog = true;
+                                  globals.prefs.setBool("incog", true);
                                   Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
