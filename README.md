@@ -1,5 +1,3 @@
-# untitled_comics
-
 # About
 Untitled Comics is an Application for Mangadex Users.
 
