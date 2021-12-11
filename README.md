@@ -11,6 +11,6 @@ Explore Tab should provide Comics based on user's Interests.
 The Icognito Mode should be optimized.
 
 # Done
-Random Comic.
+- [ ] Random Comic.
 
 All data is provided by api.mangadex.org.
