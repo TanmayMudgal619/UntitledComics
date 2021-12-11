@@ -1,11 +1,16 @@
 # untitled_comics
 
-Untitled Comics is an Application for Mangadex Users. You can also read comics without Login Just go Incognito.
+# About
+Untitled Comics is an Application for Mangadex Users.
 
-Soon Explore Tab will provide Comics based on your Interests rather than some random Comics.
+You can also read comics without Login Just go Incognito.
 
-The Icognito Mode will be optimized soon.
+# TODO
+Explore Tab should provide Comics based on user's Interests.
 
-Random Comic Option. DONE.
+The Icognito Mode should be optimized.
+
+# Done
+Random Comic Option.
 
 All data is provided by api.mangadex.org .
