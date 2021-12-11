@@ -173,6 +173,7 @@ class _LoginState extends State<Login> {
                                       }
                                       return;
                                     }
+                                    globals.prefs.setBool("incog", false);
                                     globals.prefs.setString("session",
                                         a["session"]); //Storing The Token
                                     globals.prefs.setString("refresh",

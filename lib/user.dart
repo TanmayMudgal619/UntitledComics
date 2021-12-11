@@ -384,6 +384,7 @@ class _SettingsState extends State<Settings> {
                 onTap: () {
                   setState(() {
                     globals.prefs.setBool("login", false);
+                    globals.prefs.setBool("incog", true);
                   });
                   Navigator.pushAndRemoveUntil(
                       context,
