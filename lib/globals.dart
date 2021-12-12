@@ -11,7 +11,7 @@ bool csugs = true;
 bool cero = true;
 bool cpor = false;
 
-late List<List<mangaBasic>> mdata;
+late List<List<MangaBasic>> mdata;
 
 Map<String, List<String>> comicstatus = {
   "reading": [],
@@ -25,7 +25,7 @@ Map<String, List<String>> comicstatus = {
 GlobalKey<ScaffoldState> sk = GlobalKey();
 TextEditingController secnt = TextEditingController();
 
-late String CT;
+late String ct;
 
 // late Directory appdir;
 const languageToFlag = {

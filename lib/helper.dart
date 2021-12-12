@@ -9,12 +9,12 @@ import 'newapilib.dart';
 import 'show.dart';
 
 //A class for The Horizontal Row on Main Page
-class horizontalRow extends StatelessWidget {
+class HorizontalRow extends StatelessWidget {
   final double width;
   final String title;
-  final List<mangaBasic> items;
+  final List<MangaBasic> items;
   final int count;
-  horizontalRow(this.width, this.title, this.items, this.count);
+  HorizontalRow(this.width, this.title, this.items, this.count);
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -28,7 +28,7 @@ class horizontalRow extends StatelessWidget {
             onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => showMangas(items, title))),
+                    builder: (context) => ShowMangas(items, title))),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -75,7 +75,7 @@ class horizontalRow extends StatelessWidget {
 
 //A Class for  Comic Card
 class CurveMangaB extends StatelessWidget {
-  final mangaBasic item;
+  final MangaBasic item;
   final double width;
   CurveMangaB(this.item, this.width);
 
@@ -91,7 +91,7 @@ class CurveMangaB extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => mangaMain(item),
+            builder: (context) => MangaMain(item),
           ),
         );
       },
@@ -202,7 +202,7 @@ class CurveMangaB extends StatelessWidget {
 }
 
 InkWell show(
-    BuildContext context, mangaBasic item, double height, double width) {
+    BuildContext context, MangaBasic item, double height, double width) {
   return InkWell(
     focusColor: Colors.transparent,
     hoverColor: Colors.transparent,
@@ -213,7 +213,7 @@ InkWell show(
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => mangaMain(item),
+          builder: (context) => MangaMain(item),
         ),
       );
     },

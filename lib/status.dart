@@ -16,7 +16,7 @@ class _StatusState extends State<Status> {
       "data": globals.comicstatus["reading"],
       "off": 0,
       "loading": false,
-      "loaded": <mangaBasic>[],
+      "loaded": <MangaBasic>[],
       "next": true,
       "scroll": null,
     },
@@ -24,7 +24,7 @@ class _StatusState extends State<Status> {
       "data": globals.comicstatus["on_hold"],
       "off": 0,
       "loading": false,
-      "loaded": <mangaBasic>[],
+      "loaded": <MangaBasic>[],
       "next": true,
       "scroll": null,
     },
@@ -32,7 +32,7 @@ class _StatusState extends State<Status> {
       "data": globals.comicstatus["plan_to_read"],
       "off": 0,
       "loading": false,
-      "loaded": <mangaBasic>[],
+      "loaded": <MangaBasic>[],
       "next": true,
       "scroll": null,
     },
@@ -40,7 +40,7 @@ class _StatusState extends State<Status> {
       "data": globals.comicstatus["dropped"],
       "off": 0,
       "loading": false,
-      "loaded": <mangaBasic>[],
+      "loaded": <MangaBasic>[],
       "next": true,
       "scroll": null,
     },
@@ -48,7 +48,7 @@ class _StatusState extends State<Status> {
       "data": globals.comicstatus["re_reading"],
       "off": 0,
       "loading": false,
-      "loaded": <mangaBasic>[],
+      "loaded": <MangaBasic>[],
       "next": true,
       "scroll": null,
     },
@@ -56,7 +56,7 @@ class _StatusState extends State<Status> {
       "data": globals.comicstatus["completed"],
       "off": 0,
       "loading": false,
-      "loaded": <mangaBasic>[],
+      "loaded": <MangaBasic>[],
       "next": true,
       "scroll": null,
     }
@@ -74,7 +74,7 @@ class _StatusState extends State<Status> {
           setState(() {
             element.value["loading"] = true;
             element.value["off"] += 100;
-            get_mangalist(
+            getmangalist(
                     element.value["data"].sublist(
                         element.value["off"],
                         (element.value["data"].length - element.value["off"] >=
@@ -93,7 +93,7 @@ class _StatusState extends State<Status> {
         }
       });
       if (element.value["data"] != null)
-        get_mangalist(
+        getmangalist(
                 element.value["data"].sublist(
                     0,
                     (element.value["data"].length - element.value["off"] >= 100)

@@ -7,21 +7,21 @@ import 'package:flutter/material.dart';
 import 'newapilib.dart';
 import 'globals.dart' as globals;
 
-class chapter extends StatefulWidget {
+class Chapter extends StatefulWidget {
   final String id;
   final String title;
   final String vol;
   final String scg;
   final String hash;
   final String bg;
-  chapter(this.id, this.title, this.vol, this.scg, this.hash, this.bg);
+  Chapter(this.id, this.title, this.vol, this.scg, this.hash, this.bg);
   @override
-  _chapterState createState() => _chapterState();
+  _ChapterState createState() => _ChapterState();
 }
 
-class _chapterState extends State<chapter> {
+class _ChapterState extends State<Chapter> {
   //List of Images in the Chapter
-  late Future<getChapterImg> imgdata;
+  late Future<GetChapterImg> imgdata;
   //View Vertical or Horiizontal
   bool ver = true;
 
@@ -106,7 +106,7 @@ class _chapterState extends State<chapter> {
                     ),
                   )),
               body: Center(
-                child: FutureBuilder<getChapterImg>(
+                child: FutureBuilder<GetChapterImg>(
                     future: imgdata,
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {

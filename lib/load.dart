@@ -14,7 +14,7 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
-  late Future<List<List<mangaBasic>>> data;
+  late Future<List<List<MangaBasic>>> data;
   @override
   void initState() {
     super.initState();

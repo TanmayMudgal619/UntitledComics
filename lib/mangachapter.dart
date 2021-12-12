@@ -4,7 +4,7 @@ import 'chapter.dart';
 import 'globals.dart' as globals;
 import 'newapilib.dart';
 
-class chapterTile extends StatefulWidget {
+class ChapterTile extends StatefulWidget {
   final String id;
   final String chapter;
   final String volumne;
@@ -13,10 +13,10 @@ class chapterTile extends StatefulWidget {
   final String hash;
   final String scg;
   final String bg;
-  chapterTile(this.id, this.chapter, this.volumne, this.title, this.lang,
+  ChapterTile(this.id, this.chapter, this.volumne, this.title, this.lang,
       this.hash, this.scg, this.bg);
   @override
-  chapterTileState createState() => chapterTileState();
+  ChapterTileState createState() => ChapterTileState();
 }
 
 String _emoji(String country) {
@@ -31,8 +31,8 @@ String _emoji(String country) {
   return emoji;
 }
 
-class chapterTileState extends State<chapterTile> {
-  late Future<getChapterImg> imgdata;
+class ChapterTileState extends State<ChapterTile> {
+  late Future<GetChapterImg> imgdata;
   int i = -1;
   int j = -1;
   @override
@@ -52,7 +52,7 @@ class chapterTileState extends State<chapterTile> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => chapter(widget.id, widget.chapter,
+              builder: (context) => Chapter(widget.id, widget.chapter,
                   widget.volumne, widget.scg, widget.hash, widget.bg),
             ),
           );
@@ -65,7 +65,7 @@ class chapterTileState extends State<chapterTile> {
               style: TextStyle(color: Colors.white),
             ),
             Text(
-              (widget.title == null)
+              (widget.title.isEmpty)
                   ? ("Chapter ${widget.chapter}")
                   : "${widget.title}",
               style: TextStyle(color: Colors.white),

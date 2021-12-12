@@ -16,7 +16,7 @@ class Explore extends StatefulWidget {
 }
 
 class _ExploreState extends State<Explore> {
-  late Future<Map<String, Set<mangaBasic>>> exdata;
+  late Future<Map<String, Set<MangaBasic>>> exdata;
 
   @override
   void initState() {
@@ -26,7 +26,7 @@ class _ExploreState extends State<Explore> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<Map<String, Set<mangaBasic>>>(
+    return FutureBuilder<Map<String, Set<MangaBasic>>>(
       future: exdata,
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
@@ -72,7 +72,7 @@ class _ExploreState extends State<Explore> {
                                 onTap: () => Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => showMangas(
+                                    builder: (context) => ShowMangas(
                                       e.value.toList(),
                                       globals.gen[e.key]!,
                                     ),

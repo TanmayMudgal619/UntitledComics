@@ -4,15 +4,15 @@ import 'mangalistviews.dart';
 import 'newapilib.dart';
 import 'dart:ui';
 
-class showMangas extends StatefulWidget {
-  final List<mangaBasic> data;
+class ShowMangas extends StatefulWidget {
+  final List<MangaBasic> data;
   final String title;
-  showMangas(this.data, this.title);
+  ShowMangas(this.data, this.title);
   @override
-  _showMangasState createState() => _showMangasState();
+  _ShowMangasState createState() => _ShowMangasState();
 }
 
-class _showMangasState extends State<showMangas> {
+class _ShowMangasState extends State<ShowMangas> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;

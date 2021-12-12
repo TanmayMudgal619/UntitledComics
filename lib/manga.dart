@@ -8,28 +8,28 @@ import 'globals.dart' as globals;
 import 'mangalistviews.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-class mangaMain extends StatefulWidget {
-  mangaBasic data;
-  mangaMain(this.data);
+class MangaMain extends StatefulWidget {
+  final MangaBasic data;
+  MangaMain(this.data);
 
   @override
-  _mangaMainState createState() => _mangaMainState();
+  _MangaMainState createState() => _MangaMainState();
 }
 
-class _mangaMainState extends State<mangaMain>
+class _MangaMainState extends State<MangaMain>
     with SingleTickerProviderStateMixin {
   var offset = 0; //Offset for Chapter
   int next = 1; //Are there ant more Chapters
   int foll = -1; //Is User Following Manga or Not
   double margin = 0.9;
 
-  late Future<List<mangaChapterData>> chdata; //Chapters
+  late Future<List<MangaChapterData>> chdata; //Chapters
 
   ScrollController cnt = ScrollController();
   late TabController taba;
 
   int current = 0; //Current Tab
-  List<mangaChapterData> currentchdata = []; //Loaded Chapters
+  List<MangaChapterData> currentchdata = []; //Loaded Chapters
   bool isload = true;
   List<String> statuses = [
     "reading",
@@ -42,7 +42,7 @@ class _mangaMainState extends State<mangaMain>
   ];
 
   bool exp = false;
-  late Future<List<mangaBasic>> rel; //Based Comics
+  late Future<List<MangaBasic>> rel; //Based Comics
 
   String st = "none", initst = "none";
 
@@ -50,7 +50,7 @@ class _mangaMainState extends State<mangaMain>
 
   @override
   void dispose() {
-    globals.CT = "";
+    globals.ct = "";
     super.dispose();
   }
 
@@ -106,8 +106,8 @@ class _mangaMainState extends State<mangaMain>
           });
         }
       });
-    globals.CT = widget.data.title;
-    rel = get_mangalist_tag(
+    globals.ct = widget.data.title;
+    rel = getmangalisttag(
         widget.data.genrei, widget.data.publicationDemographic, '20');
     chdata = getChapters(widget.data.id.toString(), 100, offset, 'asc', 'asc',
         globals.prefs.getString("lang")!.toLowerCase());
@@ -444,18 +444,18 @@ class _mangaMainState extends State<mangaMain>
                                               padding: EdgeInsets.all(5.0),
                                             ),
                                             Text(
-                                              (widget.data.lastvolume == null)
+                                              (widget.data.lastvolume == "")
                                                   ? ("Volumes : N/A")
                                                   : ("Volumes : ${widget.data.lastvolume}"),
                                             ),
                                             Text(
-                                              (widget.data.lastchapter == null)
+                                              (widget.data.lastchapter == "")
                                                   ? ("Chapters : N/A")
                                                   : ("Chapters : ${widget.data.lastchapter}"),
                                             ),
                                             Text(
                                               (widget.data.publicationDemographic ==
-                                                      null)
+                                                      "")
                                                   ? ("Demography : N/A")
                                                   : ("Demography : ${widget.data.publicationDemographic.toUpperCase()}"),
                                             ),
@@ -771,7 +771,7 @@ class _mangaMainState extends State<mangaMain>
                                     ],
                                   ),
                                 ),
-                                FutureBuilder<List<mangaChapterData>>(
+                                FutureBuilder<List<MangaChapterData>>(
                                   future: chdata,
                                   builder: (context, snapshot) {
                                     switch (snapshot.connectionState) {
@@ -821,7 +821,7 @@ class _mangaMainState extends State<mangaMain>
                                                           Colors.white54),
                                                 ),
                                               );
-                                            return chapterTile(
+                                            return ChapterTile(
                                                 currentchdata[i].id,
                                                 currentchdata[i].chapter,
                                                 currentchdata[i].volume,
@@ -881,7 +881,7 @@ class _mangaMainState extends State<mangaMain>
                                                     ),
                                                   ),
                                                 );
-                                              return chapterTile(
+                                              return ChapterTile(
                                                   currentchdata[i].id,
                                                   currentchdata[i].chapter,
                                                   currentchdata[i].volume,
@@ -903,7 +903,7 @@ class _mangaMainState extends State<mangaMain>
                                     }
                                   },
                                 ),
-                                FutureBuilder<List<mangaBasic>>(
+                                FutureBuilder<List<MangaBasic>>(
                                   future: rel,
                                   builder: (context, snap) {
                                     switch (snap.connectionState) {

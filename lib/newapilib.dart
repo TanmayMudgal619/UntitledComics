@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:http/http.dart' as https;
 import 'dart:convert';
 import 'globals.dart' as globals;
-import 'package:path_provider/path_provider.dart' as pathProvider;
-import 'package:path/path.dart' as path;
+// import 'package:path_provider/path_provider.dart' as pathProvider;
+// import 'package:path/path.dart' as path;
 
 // Future<void> download(String _url, String picname) async {
 //   final response = await https.get(Uri.parse(_url));
@@ -32,7 +32,7 @@ import 'package:path/path.dart' as path;
 //   // await Future.wait(response.map((e) => imageFile.writeAsBytes(e.bodyBytes)));
 // }
 
-class mangaBasic {
+class MangaBasic {
   String id;
   String title;
   String cover;
@@ -48,7 +48,7 @@ class mangaBasic {
   List<String> genre;
   List<String> genrei;
   List<String> theme;
-  mangaBasic({
+  MangaBasic({
     required this.id,
     required this.title,
     required this.cover,
@@ -66,7 +66,7 @@ class mangaBasic {
     required this.theme,
   });
 
-  factory mangaBasic.fromJson(Map<String, dynamic> json) {
+  factory MangaBasic.fromJson(Map<String, dynamic> json) {
     json["author"] = [];
     json["artist"] = [];
     var dm = (json["attributes"]["description"].toString() == "[]")
@@ -119,7 +119,7 @@ class mangaBasic {
         t.add(j["name"]["en"]);
       }
     }
-    return mangaBasic(
+    return MangaBasic(
       id: json["id"],
       title: json["attributes"]["title"]
           [json["attributes"]["title"].entries.toList()[0].key],
@@ -140,20 +140,20 @@ class mangaBasic {
   }
 }
 
-Future<mangaBasic> get_manga(var id) async {
+Future<MangaBasic> getmanga(var id) async {
   var url = Uri.http("api.mangadex.org", "/manga/$id", {
     "includes[]": ["author", "artist", "cover_art"],
   });
   var response = await https.get(url);
   if (response.statusCode == 200) {
     var jsonR = json.decode(response.body);
-    return mangaBasic.fromJson(jsonR);
+    return MangaBasic.fromJson(jsonR);
   } else {
     throw Exception("Error Code : ${response.statusCode}");
   }
 }
 
-Future<List<mangaBasic>> get_mangalist(List<String> ids, var limit) async {
+Future<List<MangaBasic>> getmangalist(List<String> ids, var limit) async {
   var url = Uri.http("api.mangadex.org", "/manga", {
     "ids[]": ids,
     "limit": limit,
@@ -162,9 +162,9 @@ Future<List<mangaBasic>> get_mangalist(List<String> ids, var limit) async {
   var response = await https.get(url);
   if (response.statusCode == 200) {
     var jsonR = json.decode(response.body);
-    List<mangaBasic> sedata = [];
+    List<MangaBasic> sedata = [];
     for (var i in jsonR["data"]) {
-      sedata.add(mangaBasic.fromJson(i));
+      sedata.add(MangaBasic.fromJson(i));
     }
     return sedata;
   } else {
@@ -172,7 +172,7 @@ Future<List<mangaBasic>> get_mangalist(List<String> ids, var limit) async {
   }
 }
 
-Future<List<mangaBasic>> get_mangalist_tag(
+Future<List<MangaBasic>> getmangalisttag(
     List<String> ids, var demo, var limit) async {
   var url;
   if (demo != null) {
@@ -192,9 +192,9 @@ Future<List<mangaBasic>> get_mangalist_tag(
   var response = await https.get(url);
   if (response.statusCode == 200) {
     var jsonR = json.decode(response.body);
-    List<mangaBasic> sedata = [];
+    List<MangaBasic> sedata = [];
     for (var i in jsonR["data"]) {
-      sedata.add(mangaBasic.fromJson(i));
+      sedata.add(MangaBasic.fromJson(i));
     }
     return sedata;
   } else {
@@ -202,7 +202,7 @@ Future<List<mangaBasic>> get_mangalist_tag(
   }
 }
 
-Future<List<mangaBasic>> search_manga(var title, var limit, var offset) async {
+Future<List<MangaBasic>> searchmanga(var title, var limit, var offset) async {
   List a = [
     (globals.csafe) ? ("safe") : (null),
     (globals.csugs) ? ("suggestive") : (null),
@@ -220,9 +220,9 @@ Future<List<mangaBasic>> search_manga(var title, var limit, var offset) async {
   var response = await https.get(url);
   if (response.statusCode == 200) {
     var jsonR = json.decode(response.body);
-    List<mangaBasic> sedata = [];
+    List<MangaBasic> sedata = [];
     for (var i in jsonR["data"]) {
-      sedata.add(mangaBasic.fromJson(i));
+      sedata.add(MangaBasic.fromJson(i));
     }
     return sedata;
   } else {
@@ -230,19 +230,19 @@ Future<List<mangaBasic>> search_manga(var title, var limit, var offset) async {
   }
 }
 
-Future<mangaBasic> random_manga() async {
+Future<MangaBasic> randommanga() async {
   var url = Uri.http("api.mangadex.org", "/manga/random", {
     "includes[]": ["author", "artist", "cover_art"],
   });
   var response = await https.get(url);
   if (response.statusCode == 200) {
-    return mangaBasic.fromJson(json.decode(response.body)["data"]);
+    return MangaBasic.fromJson(json.decode(response.body)["data"]);
   } else {
     throw Exception("Error code : ${response.statusCode}");
   }
 }
 
-Future<String> get_cover(var id) async {
+Future<String> getcover(var id) async {
   var url = Uri.http("api.mangadex.org", "/cover/$id");
   var response = await https.get(url);
   if (response.statusCode == 200) {
@@ -258,7 +258,7 @@ Future<String> get_cover(var id) async {
   }
 }
 
-class mangaChapterData {
+class MangaChapterData {
   String id;
   String title;
   String hash;
@@ -266,7 +266,7 @@ class mangaChapterData {
   String chapter;
   String volume;
   String scg;
-  mangaChapterData(
+  MangaChapterData(
       {required this.id,
       required this.title,
       required this.hash,
@@ -275,14 +275,14 @@ class mangaChapterData {
       required this.volume,
       required this.scg});
 
-  factory mangaChapterData.fromJson(Map<String, dynamic> json) {
+  factory MangaChapterData.fromJson(Map<String, dynamic> json) {
     String scg = "";
     for (var i in json["relationships"]) {
       if (i["type"] == "scanlation_group") {
         scg = i["attributes"]["name"];
       }
     }
-    return mangaChapterData(
+    return MangaChapterData(
         id: json['id'],
         title: json['attributes']['title'],
         hash: json['attributes']['hash'],
@@ -293,14 +293,14 @@ class mangaChapterData {
   }
 }
 
-class getChapterImg {
+class GetChapterImg {
   final String baseUrl;
   final List<dynamic> images;
   final List<dynamic> simages;
-  getChapterImg(this.baseUrl, this.images, this.simages);
+  GetChapterImg(this.baseUrl, this.images, this.simages);
 }
 
-Future<getChapterImg> getchapterimage(String id) async {
+Future<GetChapterImg> getchapterimage(String id) async {
   var url = Uri.http("api.mangadex.org", "/chapter/$id");
   var surl = Uri.http("api.mangadex.org", "/at-home/server/$id");
   var response = await https.get(url);
@@ -308,13 +308,13 @@ Future<getChapterImg> getchapterimage(String id) async {
   if (response.statusCode == 200) {
     var jsondata = jsonDecode(response.body)["data"]["attributes"];
     var baseUrl = jsonDecode(sresponse.body)["baseUrl"];
-    return getChapterImg(baseUrl, jsondata["data"], jsondata["dataSaver"]);
+    return GetChapterImg(baseUrl, jsondata["data"], jsondata["dataSaver"]);
   } else {
     throw Exception("Not Able to Load Images");
   }
 }
 
-Future<List<List<mangaBasic>>> homeload() async {
+Future<List<List<MangaBasic>>> homeload() async {
   List<String> a = [
     '32d76d19-8a05-4db0-9fc2-e0b0648fe9d0',
     'c80873ba-a29c-4285-9e3b-9b2b03be3d65',
@@ -352,26 +352,26 @@ Future<List<List<mangaBasic>>> homeload() async {
     var jsonT = jsonDecode(responses[0].body);
     var jsons = jsonDecode(responses[2].body);
     var jsonN = jsonDecode(responses[1].body);
-    List<mangaBasic> Tdata = [];
-    List<mangaBasic> Sdata = [];
-    List<mangaBasic> Ndata = [];
+    List<MangaBasic> tdata = [];
+    List<MangaBasic> sdata = [];
+    List<MangaBasic> ndata = [];
     for (var i in jsons["data"]) {
-      Sdata.add(mangaBasic.fromJson(i));
+      sdata.add(MangaBasic.fromJson(i));
     }
     for (var i in jsonT["data"]) {
-      Tdata.add(mangaBasic.fromJson(i));
+      tdata.add(MangaBasic.fromJson(i));
     }
     for (var i in jsonN["data"]) {
-      Ndata.add(mangaBasic.fromJson(i));
+      ndata.add(MangaBasic.fromJson(i));
     }
-    return [Tdata, Ndata, Sdata];
+    return [tdata, ndata, sdata];
   } else {
     throw Exception(
         "Error Code : ${responses[0].statusCode}/${responses[1].statusCode}");
   }
 }
 
-Future<List<mangaChapterData>> getChapters(String id, int limit, int offset,
+Future<List<MangaChapterData>> getChapters(String id, int limit, int offset,
     String orderc, String orderv, String lang) async {
   var url;
   if (lang == 'any') {
@@ -396,14 +396,14 @@ Future<List<mangaChapterData>> getChapters(String id, int limit, int offset,
   if (response.statusCode == 200) {
     var jsonResponse = jsonDecode(response.body);
     return (jsonResponse["data"] as List).map((e) {
-      return mangaChapterData.fromJson(e);
+      return MangaChapterData.fromJson(e);
     }).toList();
   } else {
     throw Exception("Can't Load Chapters!");
   }
 }
 
-Future<Map<String, Set<mangaBasic>>> expl(int off) async {
+Future<Map<String, Set<MangaBasic>>> expl(int off) async {
   int a = Random().nextInt(10000 - 200);
   int b = Random().nextInt(10000 - 200);
   b = (a == b) ? (a + 100) : (b);
@@ -421,9 +421,9 @@ Future<Map<String, Set<mangaBasic>>> expl(int off) async {
   if (response[0].statusCode == 200 && response[1].statusCode == 200) {
     var jsona = jsonDecode(response[0].body);
     var jsonb = jsonDecode(response[1].body);
-    Map<String, Set<mangaBasic>> maind = {};
+    Map<String, Set<MangaBasic>> maind = {};
     for (var i in jsona["data"]) {
-      var e = mangaBasic.fromJson(i);
+      var e = MangaBasic.fromJson(i);
       for (var j in e.genrei) {
         if (maind[j] != null) {
           maind[j]!.add(e);
@@ -433,7 +433,7 @@ Future<Map<String, Set<mangaBasic>>> expl(int off) async {
       }
     }
     for (var i in jsonb["data"]) {
-      var e = mangaBasic.fromJson(i);
+      var e = MangaBasic.fromJson(i);
       for (var j in e.genrei) {
         if (maind[j] != null)
           maind[j]!.add(e);

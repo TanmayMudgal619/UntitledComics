@@ -5,10 +5,10 @@ import 'newapilib.dart';
 import 'package:flutter/cupertino.dart';
 
 //Class For Based Comic Tiles
-class perdatatile extends StatelessWidget {
-  mangaBasic perdata;
-  double width;
-  perdatatile(this.perdata, this.width);
+class Perdatatile extends StatelessWidget {
+  final MangaBasic perdata;
+  final double width;
+  Perdatatile(this.perdata, this.width);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class perdatatile extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => mangaMain(perdata),
+                        builder: (context) => MangaMain(perdata),
                       ));
                 },
                 child: Container(
@@ -113,7 +113,7 @@ class perdatatile extends StatelessWidget {
       },
       onTap: () {
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) => mangaMain(perdata)));
+            MaterialPageRoute(builder: (context) => MangaMain(perdata)));
       },
       child: Container(
         height: width * 0.3 / 1.4,
@@ -196,7 +196,7 @@ class perdatatile extends StatelessWidget {
 }
 
 class GV extends StatelessWidget {
-  List<mangaBasic> data;
+  final List<MangaBasic> data;
   GV(this.data);
   @override
   Widget build(BuildContext context) {
@@ -219,13 +219,13 @@ class GV extends StatelessWidget {
 }
 
 class GVV extends StatelessWidget {
-  List<mangaBasic> data;
-  double width;
+  final List<MangaBasic> data;
+  final double width;
   GVV(this.data, this.width);
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: data.map((e) => perdatatile(e, width)).toList(),
+      children: data.map((e) => Perdatatile(e, width)).toList(),
     );
   }
 }

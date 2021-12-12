@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'newapilib.dart';
 import 'manga.dart';
 
-class randomManga extends StatefulWidget {
-  const randomManga({Key? key}) : super(key: key);
+class RandomManga extends StatefulWidget {
+  const RandomManga({Key? key}) : super(key: key);
 
   @override
-  _randomMangaState createState() => _randomMangaState();
+  _RandomMangaState createState() => _RandomMangaState();
 }
 
-class _randomMangaState extends State<randomManga> {
+class _RandomMangaState extends State<RandomManga> {
   @override
   Widget build(BuildContext context) {
     return Material(
       child: Container(
         color: Colors.black,
-        child: FutureBuilder<mangaBasic>(
-          future: random_manga(),
+        child: FutureBuilder<MangaBasic>(
+          future: randommanga(),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.active:
@@ -34,7 +34,7 @@ class _randomMangaState extends State<randomManga> {
                     ),
                   );
                 } else {
-                  return mangaMain(
+                  return MangaMain(
                     snapshot.data!,
                   );
                 }

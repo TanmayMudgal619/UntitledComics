@@ -8,18 +8,18 @@ import 'manga.dart';
 import 'newapilib.dart';
 import 'helper.dart';
 
-class mangaPage extends StatefulWidget {
-  List<mangaBasic> homedata;
-  List<mangaBasic> updates;
-  List<mangaBasic> ss;
+class MangaPage extends StatefulWidget {
+  final List<MangaBasic> homedata;
+  final List<MangaBasic> updates;
+  final List<MangaBasic> ss;
 
-  mangaPage(this.homedata, this.updates, this.ss);
+  MangaPage(this.homedata, this.updates, this.ss);
 
   @override
-  _mangaPageState createState() => _mangaPageState();
+  _MangaPageState createState() => _MangaPageState();
 }
 
-class _mangaPageState extends State<mangaPage> {
+class _MangaPageState extends State<MangaPage> {
   int now = 0;
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class _mangaPageState extends State<mangaPage> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => mangaMain(e)));
+                                    builder: (context) => MangaMain(e)));
                           },
                           child: Container(
                             width: width,
@@ -165,11 +165,11 @@ class _mangaPageState extends State<mangaPage> {
             top: 5.0,
             bottom: 5.0,
           ),
-          child: horizontalRow(width, "Latest Updates", widget.homedata, 10),
+          child: HorizontalRow(width, "Latest Updates", widget.homedata, 10),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
-          child: horizontalRow(width, "Recently Added", widget.updates, 10),
+          child: HorizontalRow(width, "Recently Added", widget.updates, 10),
         ),
       ],
     );

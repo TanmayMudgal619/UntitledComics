@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:untitled_comics/login.dart';
@@ -22,13 +21,13 @@ class LoadHome extends StatefulWidget {
 class _LoadHomeState extends State<LoadHome>
     with SingleTickerProviderStateMixin {
   bool isSearch = false; //If Search in Progress
-  late Future<List<mangaBasic>> sedata; //Store the Search Data
+  late Future<List<MangaBasic>> sedata; //Store the Search Data
   String sevalue = ""; //Store the Searched String
 
   int cv = 2; //Bottom Navigation Bar Index
 
-  Future<List<mangaBasic>> getdata(int off) async {
-    return search_manga(sevalue, '100', off);
+  Future<List<MangaBasic>> getdata(int off) async {
+    return searchmanga(sevalue, '100', off);
   }
 
   @override
@@ -90,7 +89,7 @@ class _LoadHomeState extends State<LoadHome>
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => randomManga(),
+                                builder: (context) => RandomManga(),
                               ),
                             );
                           },
@@ -300,7 +299,7 @@ class _LoadHomeState extends State<LoadHome>
                             isSearch = true;
                             a.add(value);
                             globals.prefs.setStringList("hist", a.toList());
-                            sedata = search_manga(sevalue, 100, 0);
+                            sedata = searchmanga(sevalue, 100, 0);
                           }),
                         )),
                       )
@@ -338,7 +337,7 @@ class _LoadHomeState extends State<LoadHome>
                                               sevalue = e;
                                               globals.secnt.text = e;
                                               sedata =
-                                                  search_manga(sevalue, 100, 0);
+                                                  searchmanga(sevalue, 100, 0);
                                             });
                                           },
                                           leading: Icon(
@@ -368,7 +367,7 @@ class _LoadHomeState extends State<LoadHome>
                                   .toList(),
                             )),
                           ))
-                    : (FutureBuilder<List<mangaBasic>>(
+                    : (FutureBuilder<List<MangaBasic>>(
                         //If Searched
                         future: sedata,
                         builder: (context, snapshot) {
@@ -398,7 +397,7 @@ class _LoadHomeState extends State<LoadHome>
                       )),
                 SingleChildScrollView(
                   //Home Tab
-                  child: mangaPage(
+                  child: MangaPage(
                     globals.mdata[0],
                     globals.mdata[1],
                     globals.mdata[2],

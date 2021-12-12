@@ -4,7 +4,6 @@ import 'load.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'globals.dart' as globals;
 import 'package:flutter/services.dart';
-import 'package:path_provider/path_provider.dart' as pp;
 import 'login.dart';
 
 void main() async {
