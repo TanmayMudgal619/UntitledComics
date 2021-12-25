@@ -7,6 +7,7 @@ You can also read comics without Login Just go Incognito.
 - [ ] Explore Tab should provide Comics based on user's Interests.
 
 - [ ] The Icognito Mode should be optimized.
+- [ ] History of Comics Opened to Read.
 
 - [X] Random Comic.
 
