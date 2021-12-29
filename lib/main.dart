@@ -30,7 +30,10 @@ void main() async {
     globals.prefs.setString("session", "");
     globals.prefs.setString("refresh", "");
     globals.prefs.setStringList("hist", []);
+    globals.prefs.setStringList("his", []);
   }
+  globals.li = globals.prefs.getStringList("his")!.toSet();
+
   globals.incog = globals.prefs.getBool("incog") ?? (false);
   runApp(MyApp());
 }

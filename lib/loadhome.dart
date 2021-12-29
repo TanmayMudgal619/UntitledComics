@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
+import 'package:untitled_comics/history.dart';
 import 'package:untitled_comics/login.dart';
 import 'package:untitled_comics/random.dart';
 import 'explore.dart';
@@ -122,7 +123,22 @@ class _LoadHomeState extends State<LoadHome>
                           )),
                         ),
                       ))
-                    : (null),
+                    : ((cv == 3)
+                        ? GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => History(),
+                                ),
+                              );
+                            },
+                            child: (Icon(
+                              Icons.history,
+                              size: 20,
+                            )),
+                          )
+                        : (null)),
                 leading: (cv == 1)
                     ? GestureDetector(
                         child: Icon(

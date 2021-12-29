@@ -57,6 +57,11 @@ class _MangaMainState extends State<MangaMain>
   @override
   void initState() {
     super.initState();
+    globals.li.add(widget.data.id);
+    if (globals.li.length > 100) {
+      globals.li.remove(globals.li.first);
+    }
+    globals.prefs.setStringList("his", globals.li.toList());
     cnt.addListener(() {
       if (margin == 1.0 &&
           cnt.position.userScrollDirection == ScrollDirection.forward &&
@@ -444,18 +449,18 @@ class _MangaMainState extends State<MangaMain>
                                               padding: EdgeInsets.all(5.0),
                                             ),
                                             Text(
-                                              (widget.data.lastvolume == "")
+                                              (widget.data.lastvolume == null)
                                                   ? ("Volumes : N/A")
                                                   : ("Volumes : ${widget.data.lastvolume}"),
                                             ),
                                             Text(
-                                              (widget.data.lastchapter == "")
+                                              (widget.data.lastchapter == null)
                                                   ? ("Chapters : N/A")
                                                   : ("Chapters : ${widget.data.lastchapter}"),
                                             ),
                                             Text(
                                               (widget.data.publicationDemographic ==
-                                                      "")
+                                                      null)
                                                   ? ("Demography : N/A")
                                                   : ("Demography : ${widget.data.publicationDemographic.toUpperCase()}"),
                                             ),
@@ -834,7 +839,10 @@ class _MangaMainState extends State<MangaMain>
                                       default:
                                         if (snapshot.hasError) {
                                           return Text(
-                                              snapshot.error.toString());
+                                            snapshot.error.toString(),
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          );
                                         } else {
                                           if (snapshot.data!.isNotEmpty) {
                                             if (snapshot.data!.length < 100)

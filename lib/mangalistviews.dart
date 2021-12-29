@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'helper.dart';
 import 'manga.dart';
@@ -12,100 +13,20 @@ class Perdatatile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
     return InkWell(
       onDoubleTap: () {
-        showModalBottomSheet(
+        //Double Tap to Get Info. about The Comic
+        showCupertinoModalPopup(
             context: context,
             builder: (context) {
-              return InkWell(
-                onDoubleTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MangaMain(perdata),
-                      ));
-                },
+              return Align(
+                alignment: Alignment.bottomCenter,
                 child: Container(
-                  height: width * 5 / 4,
                   width: width,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(
-                        perdata.cover,
-                      ),
-                      fit: BoxFit.cover,
-                    ),
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  child: Container(
-                    padding: EdgeInsets.all(20.0),
-                    color: Colors.black87.withOpacity(0.75),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(right: 8.0),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  child: Image.network(
-                                    perdata.cover,
-                                    width: 100,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      perdata.title,
-                                      style: TextStyle(color: Colors.white),
-                                      textScaleFactor: 1.5,
-                                    ),
-                                    Text(
-                                      perdata.authors
-                                          .toString()
-                                          .replaceAll("[", "")
-                                          .replaceAll("]", "")
-                                          .replaceAll(",", " "),
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                          Padding(padding: EdgeInsets.all(5.0)),
-                          Text(
-                            perdata.descm,
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          Padding(padding: EdgeInsets.all(5.0)),
-                          Wrap(
-                            children: perdata.genre
-                                .map((e) => Card(
-                                      margin: EdgeInsets.only(
-                                          right: 5.0, bottom: 8.0),
-                                      color: Colors.black,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          e,
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                      ),
-                                    ))
-                                .toList(),
-                          )
-                        ],
-                      ),
-                    ),
+                  height: height * 0.65,
+                  child: Material(
+                    child: show(context, perdata, height * 0.65, width),
                   ),
                 ),
               );
@@ -116,79 +37,91 @@ class Perdatatile extends StatelessWidget {
             MaterialPageRoute(builder: (context) => MangaMain(perdata)));
       },
       child: Container(
-        height: width * 0.3 / 1.4,
+        height: 160,
         margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
-        padding: EdgeInsets.only(left: width * 0.03),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: width * 0.22 / 1.4,
-              height: width * 0.3 / 1.4,
-              child: Image.network(
-                perdata.cover,
-                width: width * 0.22 / 1.4,
-                height: width * 0.3 / 1.4,
-                fit: BoxFit.cover,
-              ),
-            ),
-            // ),
-            Expanded(
-                child: Container(
-              height: width * 0.3 / 1.4,
-              padding: EdgeInsets.only(left: width * 0.03),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
+        child: ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+          child: Container(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: 105,
+                  height: 160,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: CachedNetworkImageProvider(
+                        perdata.cover,
+                      ),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                // ),
+                Expanded(
+                    child: Container(
+                  height: 160,
+                  padding: EdgeInsets.only(
+                    left: 10,
+                    top: 5,
+                    bottom: 5,
+                    right: 5,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        perdata.title,
-                        textScaleFactor: 1.2,
-                        style: TextStyle(color: Colors.white),
-                        overflow: TextOverflow.ellipsis,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            perdata.title,
+                            textScaleFactor: 1.2,
+                            style: TextStyle(color: Colors.white),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                          ),
+                          Text(
+                            perdata.authors
+                                .toString()
+                                .replaceAll("[", "")
+                                .replaceAll("]", ""),
+                            style: TextStyle(color: Colors.white70),
+                            textScaleFactor: 0.9,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
                       ),
-                      Text(
-                        perdata.authors
-                            .toString()
-                            .replaceAll("[", "")
-                            .replaceAll("]", ""),
-                        style: TextStyle(color: Colors.white60),
-                        textScaleFactor: 0.9,
-                        overflow: TextOverflow.ellipsis,
+                      Container(
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(right: 3.0),
+                              child: Icon(Icons.circle,
+                                  size: 10.0,
+                                  color: (perdata.status == "ongoing")
+                                      ? (Colors.blueAccent)
+                                      : ((perdata.status == "completed")
+                                          ? (Colors.green)
+                                          : ((perdata.status == "hiatus")
+                                              ? (Colors.orange)
+                                              : (Colors.red)))),
+                            ),
+                            Text(
+                              "${perdata.status.toUpperCase()}",
+                              textScaleFactor: 0.9,
+                              style: TextStyle(color: Colors.white70),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
-                  Container(
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 3.0),
-                          child: Icon(Icons.circle,
-                              size: 10.0,
-                              color: (perdata.status == "ongoing")
-                                  ? (Colors.blueAccent)
-                                  : ((perdata.status == "completed")
-                                      ? (Colors.green)
-                                      : ((perdata.status == "hiatus")
-                                          ? (Colors.orange)
-                                          : (Colors.red)))),
-                        ),
-                        Text(
-                          "${perdata.status.toUpperCase()}",
-                          textScaleFactor: 0.9,
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ))
-          ],
+                ))
+              ],
+            ),
+          ),
         ),
       ),
     );

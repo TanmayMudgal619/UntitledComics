@@ -241,7 +241,7 @@ InkWell show(
                 ),
                 child: ClipRRect(
                   child: Container(
-                    color: Colors.black38,
+                    color: Colors.black12,
                     padding: EdgeInsets.only(top: height * 0.14),
                     child: BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),

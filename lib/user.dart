@@ -385,6 +385,8 @@ class _SettingsState extends State<Settings> {
                   setState(() {
                     globals.prefs.setBool("login", false);
                     globals.prefs.setBool("incog", true);
+                    globals.prefs.setStringList("his", []);
+                    globals.li.clear();
                   });
                   Navigator.pushAndRemoveUntil(
                       context,
