@@ -4,7 +4,7 @@ Untitled Comics is an Application for Mangadex Users.
 You can also read comics without Login Just go Incognito.
 
 #Screenshots
-![alt text](https://github.com/TanmayMudgal619/UntitledComics/blob/master/screenshots/Screenshot_2021-12-29-22-23-27-67_653412dbad76bcfcac1ed7993626bd1c.jpg)
+![alt text](https://github.com/TanmayMudgal619/UntitledComics/blob/master/screenshots/Screenshot_2021-12-29-22-23-27-67_653412dbad76bcfcac1ed7993626bd1c.jpg | width = 100)
 
 # TODO
 - [ ] Explore Tab should provide Comics based on user's Interests.
