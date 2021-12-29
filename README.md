@@ -3,7 +3,7 @@ Untitled Comics is an Application for Mangadex Users.
 
 You can also read comics without Login Just go Incognito.
 
-Download From [Here](https://github.com/TanmayMudgal619/UntitledComics/blob/master/app/UntitledComics.apk)
+Download From <a id="raw-url" href="https://github.com/TanmayMudgal619/UntitledComics/blob/master/app/UntitledComics.apk">Here</a>
 
 # Screenshots
 <img src = "https://github.com/TanmayMudgal619/UntitledComics/blob/master/screenshots/Screenshot_2021-12-29-22-23-27-67_653412dbad76bcfcac1ed7993626bd1c.jpg" width = 350px>
